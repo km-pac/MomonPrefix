@@ -58,6 +58,8 @@ for obj in pubip_objs:
 	bgp_networks.append(obj.bgp_network)
 bgp_networks = list(set(bgp_networks))
 
+print(bgp_networks)
+
 for count, obj in enumerate(pubip_objs):
 	print(obj)
 	try:
