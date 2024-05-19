@@ -39,6 +39,8 @@ def extract_network_netname(unique_ips):
 	#return ip_objs
 
 bgp_networks = []
+isp_netnames = []
+
 
 file_path = "clientips.txt"
 with open(file_path, 'r') as file: 
@@ -54,12 +56,14 @@ ip_objs = extract_network_netname(unique_ips)
 
 for obj in ip_objs:
 	bgp_networks.append(obj.bgp_network)
+	isp_netnames.append(obj.isp_netname)
 
 bgp_networks = list(set(bgp_networks))
 print(bgp_networks)
 bgp_networks = sorted(bgp_networks)
 print(bgp_networks)
 
+ip_objs = sorted(ip_objs)
 
 for count, obj in enumerate(ip_objs):
 	try:
