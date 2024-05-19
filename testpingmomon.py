@@ -59,4 +59,4 @@ bgp_networks = list(set(bgp_networks))
 
 for count, obj in enumerate(ip_objs):
 	print(bgp_networks[count])
-	if bgp_networks[count] == obj.bgp_network: print(f"{ip:<20} {ext_ips.bgp_network:<20} {ext_ips.isp_netname:<20}")
+	if bgp_networks[count] == obj.bgp_network: print(f"{obj.client_ip:<20} {ext_ips.bgp_network:<20} {ext_ips.isp_netname:<20}")
