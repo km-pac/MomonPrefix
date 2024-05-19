@@ -59,7 +59,9 @@ for obj in pubip_objs:
 bgp_networks = list(set(bgp_networks))
 
 for count, obj in enumerate(pubip_objs):
-	print(bgp_networks[count], obj.bgp_network)
+	try:
+		print(bgp_networks[count], obj.bgp_network)
+	except: continue
 	# try: 
 	# 	if bgp_networks[count] == obj.bgp_network: print(f"{obj.bgp_network:<20} {obj.isp_netname:<20}")
 	# except: continue
