@@ -30,7 +30,7 @@ def extract_network_netname(unique_ips):
 		data = response.text
 	
 		try: 
-			client_ip = [line for line in data.split('\n') if "/net/" in line][2]
+			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
 			netnames = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]	
 			parsed_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
 			print(parsed_ip)
