@@ -46,26 +46,10 @@ file_path = "clientips.txt"
 with open(file_path, 'r') as file: 
 	lines = file.readlines() 
 	extracted_ips = [line.strip() for line in lines]
-	unique_ips = set(extracted_ips)
+	unique_ips = list(set(extracted_ips))
 
 os.system("clear")
 
 print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
 ip_objs = extract_network_netname(unique_ips)
 
-
-for obj in ip_objs:
-	bgp_networks.append(obj.bgp_network)
-	isp_netnames.append(obj.isp_netname)
-
-bgp_networks = list(set(bgp_networks))
-print(bgp_networks)
-bgp_networks = sorted(bgp_networks)
-print(bgp_networks)
-
-ip_objs = sorted(ip_objs)
-
-for count, obj in enumerate(ip_objs):
-	try:
-		if bgp_networks[count] == obj.bgp_network: print(f"{obj.client_ip:<20} {obj.bgp_network:<20} {obj.isp_netname:<20}")
-	except: continue
