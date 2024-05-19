@@ -54,10 +54,10 @@ print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
 pubip_objs = extract_network_netname(unique_ips)
 
 for obj in pubip_objs:
-	print(f"TEST: {obj.bgp_network}")
 	bgp_networks.append(obj.bgp_network)
 
 bgp_networks = sorted(list(set(bgp_networks)))
+print(bgp_networks)
 
 
 for count, obj in enumerate(pubip_objs):
