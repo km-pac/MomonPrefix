@@ -35,8 +35,8 @@ def extract_network_netname(unique_ips):
 
 		ip_objs.append(ext_ips)
 
-		#if count == 10: return ip_objs
-	return ip_objs
+		if count == 10: return ip_objs
+	#return ip_objs
 
 bgp_networks = []
 
