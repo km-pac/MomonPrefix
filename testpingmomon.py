@@ -49,4 +49,4 @@ print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
 ip_objs = extract_network_netname(unique_ips)
 
 for obj in ip_objs:
-	print({obj.bgp_network})
+	print(obj.client_ip, obj.bgp_network)
