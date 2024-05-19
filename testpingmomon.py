@@ -16,7 +16,7 @@ def extract_parse_clients(file_path):
 		lines = file.readlines() 
 		extracted_ips = [line.strip() for line in lines]
 		unique_ips = sorted(list(set(extracted_ips)))
-	return unique_ips
+	return extracted_ips, unique_ips
 
 def extract_network_netname(unique_ips):
 	ip_objs = list()
@@ -51,7 +51,7 @@ isp_netnames = []
 
 file_path = "clientips.txt"
 os.system("clear")
-unique_ips = extract_parse_clients(file_path)
+extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
 ip_objs = extract_network_netname(unique_ips)
