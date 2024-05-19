@@ -53,9 +53,9 @@ ip_objs = extract_network_netname(unique_ips)
 
 
 for obj in ip_objs:
-	bgp_networks.append(obj.bgp_network.sort())
+	bgp_networks.append(obj.bgp_network)
 
-bgp_networks = list(set(bgp_networks))
+bgp_networks = list(set(bgp_networks)).sort()
 
 
 for count, obj in enumerate(ip_objs):
