@@ -2,7 +2,8 @@ import requests, os
 from tabulate import tabulate
 
 class ExtractedIP:
-	def	__init__(self, bgp_network, isp_netname):
+	def	__init__(self, client_ip, bgp_network, isp_netname):
+		self.client_ip = client_ip
 		self.bgp_network = bgp_network
 		self.isp_netname = isp_netname
 
@@ -28,7 +29,7 @@ def extract_network_netname(unique_ips):
 			parsed_netname = netnames.split(":")[1].strip()
 		except: continue
 
-		ext_ips = ExtractedIP(parsed_ip, parsed_netname)
+		ext_ips = ExtractedIP(client_ip, parsed_ip, parsed_netname)
 		print(f"{count+1:<10} {ip:<20} {ext_ips.bgp_network:<20} {ext_ips.isp_netname:<20}")
 
 		ip_objs.append(ext_ips)
