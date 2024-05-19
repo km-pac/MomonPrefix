@@ -8,6 +8,7 @@ class ExtractedIP:
 		self.isp_netname = isp_netname
 
 	def pingnet(self):
+		print(f"Conducting fping for {self.bgp_network}")
 		os.system(f"fping -g {self.bgp_network}")
 
 def extract_network_netname(unique_ips):
