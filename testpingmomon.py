@@ -46,13 +46,17 @@ def extract_network_netname(unique_ips):
 	#return ip_objs
 
 bgp_networks = []
-isp_netnames = []
-
 
 file_path = "clientips.txt"
 os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
-ip_objs = extract_network_netname(unique_ips)
+pubip_objs = extract_network_netname(unique_ips)
 
+for obj in pubip_objs:
+	bgp_networks.append(obj.bgp_network)
+bgp_networks = list(set(bgp_networks))
+
+for count, obj in enumerate(pubip_objs):
+	if bgp_networks[count] == obj.bgp_network: print(f"{obj.bgp_network:<20} {obj.isp_netname:<20}")
