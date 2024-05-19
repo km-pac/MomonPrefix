@@ -28,6 +28,7 @@ def extract_network_netname(unique_ips):
 		except: continue
 
 		ip = ExtractedIP(parsed_ip, parsed_netname)
+		print(ip)
 		ip_objs.append(ip)
 	return ip_objs
 
