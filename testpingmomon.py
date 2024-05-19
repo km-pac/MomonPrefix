@@ -21,14 +21,15 @@ def extract_network_netname(unique_ips):
 		data = response.text
 	
 		try: 
-			ips = [line for line in data.split('\n') if "/net/" in line][0]
+			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
 			netnames = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]	
-			parsed_ip = ips.strip().split("/net/")[1].split("\">")[0]
+
+			parsed_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
 			parsed_netname = netnames.split(":")[1].strip()
 		except: continue
 
-		ips = ExtractedIP(parsed_ip, parsed_netname)
-		print(f"{count+1:<10} {ips.bgp_network:<20} {ips.isp_netname:<20}")
+		ext_ips = ExtractedIP(parsed_ip, parsed_netname)
+		print(f"{count+1:<10} {client_ip[count]} {ext_ips.bgp_network:<20} {ext_ips.isp_netname:<20}")
 
 		ip_objs.append(ip)
 	return ip_objs
