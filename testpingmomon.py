@@ -36,8 +36,6 @@ def extract_network_netname(unique_ips):
 		if count == 10: return ip_objs
 
 
-
-
 file_path = "clientips.txt"
 with open(file_path, 'r') as file: 
 	lines = file.readlines() 
@@ -49,4 +47,4 @@ os.system("clear")
 print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
 ip_objs = extract_network_netname(unique_ips)
 
-print(ip_objs)
+print(171.253.129.77.bgp_network)
