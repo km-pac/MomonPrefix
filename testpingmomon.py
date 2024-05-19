@@ -26,8 +26,8 @@ def extract_network_netname(unique_ips):
 			parsed_netname = netnames.split(":")[1].strip()
 		except: continue
 
-		ip = ExtractedIP(parsed_ip, parsed_netname)
-		print(ip, ip.bgp_network, ip.isp_netname)
+		ext_ip = ExtractedIP(parsed_ip, parsed_netname)
+		print(ip, ext_ip.bgp_network, ext_ip.isp_netname)
 
 
 file_path = "clientips.txt"
