@@ -55,7 +55,9 @@ for obj in ip_objs:
 	bgp_networks.append(obj.bgp_network)
 
 bgp_networks = set(bgp_networks)
-print(bgp_networks[0], type(bgp_networks))
+
+for ip in bgp_networks:
+	print(ip)
 
 for count, obj in enumerate(ip_objs):
 	print(bgp_networks[count])
