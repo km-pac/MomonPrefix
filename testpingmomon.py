@@ -11,6 +11,13 @@ class ExtractedIP:
 		print(f"Conducting fping for {self.bgp_network}")
 		os.system(f"fping -g {self.bgp_network}")
 
+def extract_parse_clients(file_path):
+	with open(file_path, 'r') as file: 
+		lines = file.readlines() 
+		extracted_ips = [line.strip() for line in lines]
+		unique_ips = sorted(list(set(extracted_ips)))
+		return unique_ips
+
 def extract_network_netname(unique_ips):
 	ip_objs = list()
 	target_url = "https://bgp.he.net/ip/"
@@ -43,12 +50,8 @@ isp_netnames = []
 
 
 file_path = "clientips.txt"
-with open(file_path, 'r') as file: 
-	lines = file.readlines() 
-	extracted_ips = [line.strip() for line in lines]
-	unique_ips = sorted(list(set(extracted_ips)))
-
 os.system("clear")
+extract_parse_clients(file_path)
 
 print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
 ip_objs = extract_network_netname(unique_ips)
