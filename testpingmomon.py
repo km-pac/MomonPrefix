@@ -47,4 +47,5 @@ os.system("clear")
 print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
 ip_objs = extract_network_netname(unique_ips)
 
-print(ip_objs.__qualname__, type(ip_objs))
+for ip in ip_objs:
+	print(ip.__qualname__, type(ip))
