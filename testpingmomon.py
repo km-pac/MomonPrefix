@@ -26,7 +26,8 @@ def extract_network_netname(unique_ips):
 			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
 			netnames = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]	
 
-			parsed_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
+			parsed_ip = [client_ip.strip().split("/net/")[1].split("\">")[0]]
+			print(parsed_ip)
 			parsed_netname = netnames.split(":")[1].strip()
 		except: continue
 
@@ -51,4 +52,3 @@ ip_objs = extract_network_netname(unique_ips)
 
 for obj in ip_objs:
 	print(obj.client_ip, obj.bgp_network)
-	obj.pingnet()
