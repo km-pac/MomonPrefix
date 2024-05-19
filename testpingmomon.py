@@ -47,4 +47,5 @@ os.system("clear")
 print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
 ip_objs = extract_network_netname(unique_ips)
 
-print(171.253.129.77.bgp_network)
+for obj in ip_objs:
+	print({obj.bgp_network})
