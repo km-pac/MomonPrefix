@@ -57,7 +57,7 @@ for obj in ip_objs:
 
 bgp_networks = list(set(bgp_networks))
 print(bgp_networks)
-bgp_networks.sort()
+bgp_networks.sorted()
 print(bgp_networks)
 
 
