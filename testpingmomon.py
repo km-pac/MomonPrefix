@@ -33,7 +33,7 @@ def extract_network_netname(unique_ips):
 
 		ip_objs.append(ext_ips)
 
-		if count == 10: continue
+		if count == 10: return
 	return ip_objs
 
 
