@@ -46,7 +46,7 @@ file_path = "clientips.txt"
 with open(file_path, 'r') as file: 
 	lines = file.readlines() 
 	extracted_ips = [line.strip() for line in lines]
-	unique_ips = list(set(extracted_ips))
+	unique_ips = sorted(list(set(extracted_ips)))
 
 os.system("clear")
 
