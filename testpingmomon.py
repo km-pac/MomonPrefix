@@ -37,6 +37,7 @@ def extract_network_netname(unique_ips):
 
 		if count == 10: return ip_objs
 
+unique_parsed_ips = []
 
 file_path = "clientips.txt"
 with open(file_path, 'r') as file: 
@@ -51,6 +52,6 @@ ip_objs = extract_network_netname(unique_ips)
 
 
 for obj in ip_objs:
-	unique_ips.append(obj.bgp_network)
+	unique_parsed_ips.append(obj.bgp_network)
 
-print(set(unique_ips))
+print(set(unique_parsed_ips))
