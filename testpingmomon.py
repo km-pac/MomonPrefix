@@ -51,3 +51,4 @@ ip_objs = extract_network_netname(unique_ips)
 
 for obj in ip_objs:
 	print(obj.client_ip, obj.bgp_network)
+	obj.pingnet()
