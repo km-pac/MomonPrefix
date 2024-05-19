@@ -28,7 +28,7 @@ def extract_network_netname(unique_ips):
 		except: continue
 
 		ips = ExtractedIP(parsed_ip, parsed_netname)
-		print(f"{count+1:<10} {ips:<20} {ips.bgp_network:<20} {ips.isp_netname:<20}")
+		print(f"{count+1:<10} {ips.bgp_network:<20} {ips.isp_netname:<20}")
 
 		ip_objs.append(ip)
 	return ip_objs
