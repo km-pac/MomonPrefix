@@ -28,6 +28,7 @@ def extract_network_netname(unique_ips):
 
 		ext_ip = ExtractedIP(parsed_ip, parsed_netname)
 		print(ip, ext_ip.bgp_network, ext_ip.isp_netname)
+	return ext_ip
 
 
 file_path = "clientips.txt"
@@ -39,4 +40,5 @@ with open(file_path, 'r') as file:
 os.system("clear")
 
 print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
-extract_network_netname(unique_ips)
+ext_ip = extract_network_netname(unique_ips)
+print(ext_ip, type(ext_ip))
