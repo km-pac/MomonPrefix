@@ -59,6 +59,7 @@ for obj in pubip_objs:
 bgp_networks = list(set(bgp_networks))
 
 for count, obj in enumerate(pubip_objs):
+	print(obj)
 	try:
 		print(bgp_networks[count], obj.bgp_network)
 	except: continue
