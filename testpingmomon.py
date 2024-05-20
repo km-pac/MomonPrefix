@@ -50,7 +50,7 @@ file_path = "clientips.txt"
 os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 
-print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}\n")
+print(f"EXTRACTED CLIENT IP COUNT: {len(extracted_ips)} \nUNIQUE CLIENT IP COUNT: {len(unique_ips)}\n")
 print(f"{'INDEX':<10} {'CLIENT IP':<20} {'NETWORK/PREFIX LENGHT':<25} {'ISP':<20}")
 pubip_objs = extract_network_netname(unique_ips)
 
