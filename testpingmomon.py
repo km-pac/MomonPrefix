@@ -60,9 +60,12 @@ pubip_objs = extract_network_netname(unique_ips)
 
 for count, obj in enumerate(pubip_objs):
 	try:
-		if obj.bgp_network != obj.bgp_network[count]: bgp_networks.append(obj.bgp_network)
-		if obj.isp_netname != obj.isp_netname[count]: isp_netnames.append(obj.isp_netname)
+		if obj.bgp_network != obj.bgp_network[count]: print(obj.bgp_network)#bgp_networks.append(obj.bgp_network)
+		else: print("SAME")
+
+		if obj.isp_netname != obj.isp_netname[count]: print(obj.bgp_network)#isp_netnames.append(obj.isp_netname)
+		else: print("SAME")
 	except: continue
-	
+
 for count, bgp_networks in enumerate(bgp_networks):
 	print(bgp_networks, isp_netnames[count])
