@@ -54,12 +54,13 @@ extracted_ips, unique_ips = extract_parse_clients(file_path)
 print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
 pubip_objs = extract_network_netname(unique_ips)
 
-for obj in pubip_objs:
-	bgp_networks.append(obj.bgp_network)
-	isp_netnames.append(obj.isp_netname)
+# for obj in pubip_objs:
+# 	bgp_networks.append(obj.bgp_network)
+# 	isp_netnames.append(obj.isp_netname)
 
-bgp_networks = sorted(set(bgp_networks))
-isp_netnames = sorted(set(isp_netnames))
+for count, obj in enumerate(pubip_objs):
+	if obj.bgp_network != obj.bgp_network[count]: bgp_networks.append(obj.bgp_network)
+	if obj.isp_netname != obj.isp_netname[count]: isp_netnames.append(obj.isp_netname)
 
 for count, bgp_networks in enumerate(bgp_networks):
 	print(bgp_networks, isp_netnames[count])
