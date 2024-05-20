@@ -45,7 +45,7 @@ def extract_network_netname(unique_ips):
 	return ip_objs
 
 bgp_networks = list()
-bgp_networks = list()
+isp_netnames = list()
 
 file_path = "clientips.txt"
 os.system("clear")
