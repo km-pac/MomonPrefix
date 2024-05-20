@@ -41,7 +41,7 @@ def extract_network_netname(unique_ips):
 
 		ip_objs.append(ext_ips)
 
-		if count == 20: return ip_objs
+		if count == 15: return ip_objs
 	#return ip_objs
 
 bgp_networks = list()
@@ -60,7 +60,7 @@ pubip_objs = extract_network_netname(unique_ips)
 
 for count, obj in enumerate(pubip_objs):
 	try:
-		print(obj.bgp_network, [obj.bgp_network][count+1])
+		print(obj.bgp_network, [obj.bgp_network[count+1]])
 		if obj.bgp_network != obj.bgp_network[count+1]: print(obj.bgp_network)#bgp_networks.append(obj.bgp_network)
 		else: print("SAME")
 
