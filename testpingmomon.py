@@ -51,6 +51,7 @@ os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 print(f"EXTRACT COUNT: {len(extracted_ips)} \nUNIQUE COUNT: {len(unique_ips)}")
+print(f"{INDEX:<10} {CLIENT_IP:<20} {NETWORK//PREFIX_LENGHT:<20} {ISP:<20}")
 pubip_objs = extract_network_netname(unique_ips)
 
 for obj in pubip_objs:
