@@ -56,8 +56,10 @@ pubip_objs = extract_network_netname(unique_ips)
 
 for obj in pubip_objs:
 	bgp_networks.append(obj.bgp_network)
+	isp_netnames.append(obj.isp_netname)
 
 bgp_networks = sorted(set(bgp_networks))
+isp_netnames = sorted(set(isp_netnames))
 
 for count, bgp_networks in enumerate(bgp_networks):
-	print(bgp_networks)
+	print(bgp_networks, isp_netnames[count])
