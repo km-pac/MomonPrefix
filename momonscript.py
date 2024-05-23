@@ -1,3 +1,3 @@
-from testpingmomon.py import bgp_networks
+from testpingmomon import *
 
-print(bgp_networks)
+bgp_network = export_bgp()
