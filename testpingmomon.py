@@ -44,6 +44,9 @@ def extract_network_netname(unique_ips):
 		#if count == 15: return ip_objs
 	return ip_objs
 
+def export_bgp(bgp_networks):
+	return bgp_networks
+
 bgp_networks = list()
 
 file_path = "clientips.txt"
@@ -62,3 +65,5 @@ bgp_networks = sorted(set(bgp_networks))
 print(f"\n\nNETWORK COUNT: {len(pubip_objs)} \nUNIQUE NETWORK COUNT: {len(bgp_networks)}\n")
 for count, bgp_networks in enumerate(bgp_networks):
 	print(bgp_networks)
+
+export_bgp(bgp_networks)
