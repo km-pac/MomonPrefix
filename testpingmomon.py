@@ -44,7 +44,7 @@ def extract_network_netname(unique_ips):
 		#if count == 15: return ip_objs
 	return ip_objs
 
-def export_bgp(bgp_networks):
+def export_bgp():
 	return bgp_networks
 
 bgp_networks = list()
