@@ -1,3 +1,3 @@
-from testpingmomon.py import *
+from testpingmomon.py import bgp_networks
 
 print(bgp_networks)
