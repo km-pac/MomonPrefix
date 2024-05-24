@@ -38,7 +38,8 @@ def extract_bgp_network(target_url, headers, unique_ips):
 
 def extract_bgp_netname(target_url, headers, bgp_networks):
 	for count, network in enumerate(bgp_networks):
-		response = requests.get(target_url + ip, headers=headers)
+		parsed_network = network.split("/")[0]
+		response = requests.get(target_url + parsed_network, headers=headers)
 		data = response.text
 		try:
 			bgp_ip = [line for line in data.split() if "netname" or "Netname" in line]
