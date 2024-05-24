@@ -18,13 +18,9 @@ def extract_parse_clients(file_path):
 		print(f"EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQE CLIENT IPs: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
 
-def extract_bgp_network(unique_ips):
+def extract_bgp_network(target_url, headers, unique_ips):
 	parsed_bgp_networks = list()
 	bgp_networks = list()
-	target_url = "https://bgp.he.net/ip/"
-	headers = {
-    	'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G996U Build\\/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36',
-	}
 	print(f"EXTRACTING BGP NETWORK\n{'IDX':<5} {'CLIENT IP':<25} {'NETWORK/PREFIX LENGHT':<25}")
 	for count, ip in enumerate(unique_ips):
 		response = requests.get(target_url + ip, headers=headers)
@@ -40,9 +36,14 @@ def extract_bgp_network(unique_ips):
 	print(f"\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}\n")
 	return bgp_networks
 
-def extract_bgp_netname(bgp_networks):
+def extract_bgp_netname(target_url, headers, bgp_networks):
 	for count, network in enumerate(bgp_networks):
-		print(network)
+		response = requests.get(target_url + ip, headers=headers)
+		data = response.text
+		try:
+			bgp_ip = [line for line in data.split() if "netname" or "Netname" in line]
+			print(bgp_ip)
+		except: continue
 
 
 # def extract_network(unique_ips):
