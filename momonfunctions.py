@@ -23,10 +23,10 @@ def extract_bgp_network(unique_ips):
 	headers = {
     	'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G996U Build\\/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36',
 	}
+	print(f"EXTRACTING BGP NETWORK\n{'INDEX':<10} {'CLIENT IP':<20} {'NETWORK/PREFIX LENGHT':<25} {'ISP':<20}")
 	for count, ip in enumerate(unique_ips):
 		response = requests.get(target_url + ip, headers=headers)
 		data = response.text
-
 		try: 
 			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
 			parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
