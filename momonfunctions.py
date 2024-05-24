@@ -35,9 +35,9 @@ def extract_bgp_network(unique_ips):
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{count+1:<5} {ip:<25} {parsed_network_ip:<25}")
 		except: continue
-		bgp_networks = set(parsed_bgp_networks)
-		print(f"\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}\n")
-		print(bgp_networks)
+	bgp_networks = set(parsed_bgp_networks)
+	print(f"\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}\n")
+	print(bgp_networks)
 	return bgp_networks
 
 
