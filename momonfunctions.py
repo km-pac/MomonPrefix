@@ -15,7 +15,7 @@ def extract_parse_clients(file_path):
 		lines = file.readlines() 
 		extracted_ips = [line.strip() for line in lines]
 		unique_ips = sorted(list(set(extracted_ips)))
-		print(f"EXTRACTED CLIENT IPs COUNT: {len(extracted_ips)}\nSORTED CLIENT IPs COUNT: {len(unique_ips)}\n")
+		print(f"EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQE CLIENT IPs: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(unique_ips):
@@ -34,16 +34,10 @@ def extract_bgp_network(unique_ips):
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{count+1:<5} {ip:<25} {parsed_network_ip:<25}")
 		except: continue
-
-	
-
-		# # try:
-		# client_ip = [line for line in data.split('\n') if "/net/" in line][0]
-		# bgp_networks.append(client_ip.strip().split("/net/")[1].split("\">")[0])
-		# print(bgp_networks)
-		# # except: continue
-
-		# return bgp_networks
+		parsed_bgp_networks = set(parsed_bgp_networks)
+		print(f"\nEXTRACTED BGP NET: {len(extracted_ips)}\nUNIQUE BGP NET: {len(unique_ips)}\n")
+		print(parsed_bgp_networks)
+	return parsed_bgp_networks
 
 
 # def extract_network(unique_ips):
