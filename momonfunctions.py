@@ -15,7 +15,7 @@ def extract_parse_clients(file_path):
 		lines = file.readlines() 
 		extracted_ips = [line.strip() for line in lines]
 		unique_ips = sorted(list(set(extracted_ips)))
-		print(f"EXTRACTED CLIENT IPs COUNT: {len(extracted_ips)}\nSORTED CLIENT IPs COUNT: {len(unique_ips)}")
+		print(f"EXTRACTED CLIENT IPs COUNT: {len(extracted_ips)}\nSORTED CLIENT IPs COUNT: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(unique_ips):
