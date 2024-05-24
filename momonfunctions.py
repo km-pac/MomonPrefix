@@ -20,6 +20,7 @@ def extract_parse_clients(file_path):
 
 def extract_bgp_network(unique_ips):
 	parsed_bgp_networks = list()
+	bgp_networks = list()
 	target_url = "https://bgp.he.net/ip/"
 	headers = {
     	'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G996U Build\\/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36',
@@ -34,10 +35,10 @@ def extract_bgp_network(unique_ips):
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{count+1:<5} {ip:<25} {parsed_network_ip:<25}")
 		except: continue
-		parsed_bgp_networks = set(parsed_bgp_networks)
-		print(f"\nEXTRACTED BGP NET: {len(extracted_ips)}\nUNIQUE BGP NET: {len(unique_ips)}\n")
-		print(parsed_bgp_networks)
-	return parsed_bgp_networks
+		bgp_networks = set(parsed_bgp_networks)
+		print(f"\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}\n")
+		print(bgp_networks)
+	return bgp_networks
 
 
 # def extract_network(unique_ips):
