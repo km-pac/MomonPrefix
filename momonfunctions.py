@@ -25,6 +25,7 @@ def extract_bgp_network(unique_ips):
 	}
 
 	for ip in unique_ips:
+		print(ip)
 		response = requests.get(target_url + ip, headers=headers)
 		data = response.text
 
