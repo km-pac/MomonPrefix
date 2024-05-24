@@ -1,6 +1,6 @@
 import requests, os
 
-title_spacing = 20
+title_spacing = 10
 index_spacing = 5
 ip_spacing = 25
 
@@ -35,7 +35,6 @@ def extract_bgp_network(target_url, headers, unique_ips):
 			parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{count+1:<{index_spacing}} {ip:<{ip_spacing}} {parsed_network_ip:<{ip_spacing}}")
-			if count == 3: break
 		except: continue
 	bgp_networks = sorted(set(parsed_bgp_networks))
 	print(f"\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}\n")
