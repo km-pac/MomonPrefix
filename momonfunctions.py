@@ -30,7 +30,7 @@ def extract_bgp_network(unique_ips):
 		try: 
 			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
 			parsed_bgp_networks.append(client_ip.strip().split("/net/")[1].split("\">")[0])
-			print(f"{count+1:<5} {ip:<15} {parsed_bgp_networks:<15}")
+			print(f"{count+1:<5} {ip:<15}")
 		except: continue
 
 		# # try:
