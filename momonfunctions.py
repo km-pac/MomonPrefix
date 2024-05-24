@@ -15,6 +15,7 @@ def extract_parse_clients(file_path):
 		lines = file.readlines() 
 		extracted_ips = [line.strip() for line in lines]
 		unique_ips = sorted(list(set(extracted_ips)))
+		print(f"EXTRACTED CLIENT IPs COUNT: {len(extracted_ips)}\nSORTED CLIENT IPs COUNT: {len(unique_ips)}")
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(unique_ips):
@@ -23,7 +24,7 @@ def extract_bgp_network(unique_ips):
 	headers = {
     	'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G996U Build\\/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36',
 	}
-	print(f"EXTRACTING BGP NETWORK\n{'INDEX':<10} {'CLIENT IP':<20} {'NETWORK/PREFIX LENGHT':<25}")
+	print(f"EXTRACTING BGP NETWORK\n{'INDEX':<5} {'CLIENT IP':<25} {'NETWORK/PREFIX LENGHT':<25}")
 	for count, ip in enumerate(unique_ips):
 		response = requests.get(target_url + ip, headers=headers)
 		data = response.text
@@ -31,8 +32,10 @@ def extract_bgp_network(unique_ips):
 			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
 			parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
 			parsed_bgp_networks.append(parsed_network_ip)
-			print(f"{count+1:<5} {ip:<20} {parsed_network_ip:<20}")
+			print(f"{count+1:<5} {ip:<25} {parsed_network_ip:<25}")
 		except: continue
+
+	
 
 		# # try:
 		# client_ip = [line for line in data.split('\n') if "/net/" in line][0]
