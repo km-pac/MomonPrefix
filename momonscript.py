@@ -9,4 +9,3 @@ extracted_ips, unique_ips = extract_parse_clients(file_path)
 print(unique_ips)
 
 bgp_networks = extract_bgp_network(unique_ips)
-print(bgp_networks)
