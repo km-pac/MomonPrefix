@@ -37,6 +37,8 @@ def extract_bgp_network(target_url, headers, unique_ips):
 	return bgp_networks
 
 def extract_bgp_netname(target_url, headers, bgp_networks):
+	parsed_bgp_netname = list()
+	bgp_netname = list()
 	print(f"EXTRACTING BGP NETNAME\n{'IDX':<5} {'BGP IP':<25} {'ISP/NETNAME':<25}")
 	for count, network in enumerate(bgp_networks):
 		parsed_network = network.strip().split("/")[0]
@@ -45,7 +47,8 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 		try:
 			bgp_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
 			parsed_bgp_netname = bgp_ip.strip().split(":")[1]
-			print(f"{count+1:<5} {bgp_ip:<25} {parsed_bgp_netname:<25}")
+			bgp_netname.append(parsed_bgp_netname)
+			print(f"{count+1:<5} {network:<25} {parsed_bgp_netname:<25}")
 		except: continue
 	
 
