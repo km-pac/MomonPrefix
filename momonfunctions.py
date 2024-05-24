@@ -34,6 +34,7 @@ def extract_bgp_network(unique_ips):
 			parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{count+1:<5} {ip:<25} {parsed_network_ip:<25}")
+			if count == 10: break
 		except: continue
 	bgp_networks = set(parsed_bgp_networks)
 	print(f"\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}\n")
