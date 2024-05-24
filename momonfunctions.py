@@ -24,7 +24,7 @@ def extract_bgp_network(unique_ips):
 	headers = {
     	'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G996U Build\\/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36',
 	}
-	print(f"EXTRACTING BGP NETWORK\n{'INDEX':<5} {'CLIENT IP':<25} {'NETWORK/PREFIX LENGHT':<25}")
+	print(f"EXTRACTING BGP NETWORK\n{'IDX':<5} {'CLIENT IP':<25} {'NETWORK/PREFIX LENGHT':<25}")
 	for count, ip in enumerate(unique_ips):
 		response = requests.get(target_url + ip, headers=headers)
 		data = response.text
