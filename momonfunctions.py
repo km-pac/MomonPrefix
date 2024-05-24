@@ -42,7 +42,8 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 		response = requests.get(target_url + parsed_network, headers=headers)
 		data = response.text
 		try:
-			print(f"{[line for line in data.split()]}")
+			test = [line for line in data.split()]
+			print(test)
 			# bgp_ip = [line for line in data.split() if "netname" in line or "Netname" in line]
 			print(bgp_ip)
 		except: continue
