@@ -26,8 +26,9 @@ def extract_bgp_network(unique_ips):
 
 	for ip in unique_ips:
 		print(ip)
-		# response = requests.get(target_url + ip, headers=headers)
-		# data = response.text
+		response = requests.get(target_url + ip, headers=headers)
+		data = response.text
+		print(data)
 
 		# # try:
 		# client_ip = [line for line in data.split('\n') if "/net/" in line][0]
