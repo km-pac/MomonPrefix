@@ -26,16 +26,16 @@ def extract_bgp_network(unique_ips):
 
 	for ip in unique_ips:
 		print(ip)
-		response = requests.get(target_url + ip, headers=headers)
-		data = response.text
+		# response = requests.get(target_url + ip, headers=headers)
+		# data = response.text
 
-		# try:
-		client_ip = [line for line in data.split('\n') if "/net/" in line][0]
-		bgp_networks.append(client_ip.strip().split("/net/")[1].split("\">")[0])
-		print(bgp_networks)
-		# except: continue
+		# # try:
+		# client_ip = [line for line in data.split('\n') if "/net/" in line][0]
+		# bgp_networks.append(client_ip.strip().split("/net/")[1].split("\">")[0])
+		# print(bgp_networks)
+		# # except: continue
 
-		return bgp_networks
+		# return bgp_networks
 
 
 # def extract_network(unique_ips):
