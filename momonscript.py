@@ -20,4 +20,8 @@ os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 extract_bgp_network(unique_ips)
+<<<<<<< HEAD
 >>>>>>> 279eeeb2ba57be52b3b5c6cbbba738b7bc3efaf2
+=======
+print("test")
+>>>>>>> c77abd4e7bdb0d4e65cefecf820af7f684c6ee94
