@@ -38,12 +38,12 @@ def extract_bgp_network(target_url, headers, unique_ips):
 
 def extract_bgp_netname(target_url, headers, bgp_networks):
 	for count, network in enumerate(bgp_networks):
-		parsed_network = network.split("/")[0]
+		parsed_network = network.split("/")[0].strip()
 		response = requests.get(target_url + parsed_network, headers=headers)
 		print(response)
 		data = response.text
 		try:
-			bgp_ip = [line for line in data.encode('utf-8').strip()]
+			bgp_ip = [line for line in data.encode('utf-8')]
 			print(bgp_ip)
 		except: continue
 
