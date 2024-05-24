@@ -1,5 +1,9 @@
 import requests, os
 
+title_spacing = 20
+index_spacing = 5
+ip_spacing = 25
+
 class ExtractedIP:
 	def	__init__(self, client_ip, bgp_network, isp_netname):
 		self.client_ip = client_ip
@@ -21,7 +25,7 @@ def extract_parse_clients(file_path):
 def extract_bgp_network(target_url, headers, unique_ips):
 	parsed_bgp_networks = list()
 	bgp_networks = list()
-	print(f"EXTRACTING BGP NETWORK\n{'IDX':<5} {'CLIENT IP':<25} {'NETWORK/PREFIX LENGHT':<25}")
+	print(f"EXTRACTING BGP NETWORK\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGHT':<{ip_spacing}}")
 	for count, ip in enumerate(unique_ips):
 		response = requests.get(target_url + ip, headers=headers)
 		data = response.text
@@ -39,7 +43,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 def extract_bgp_netname(target_url, headers, bgp_networks):
 	parsed_bgp_netname = list()
 	bgp_netname = list()
-	print(f"EXTRACTING BGP NETNAME\n{'IDX':<5} {'BGP IP':<25} {'ISP/NETNAME':<25}")
+	print(f"{' ':<10}EXTRACTING BGP NETNAME{' ':<10}\n{'IDX':<5} {'BGP IP':<25} {'ISP/NETNAME':<25}")
 	for count, network in enumerate(bgp_networks):
 		parsed_network = network.strip().split("/")[0]
 		response = requests.get(target_url + parsed_network, headers=headers)
