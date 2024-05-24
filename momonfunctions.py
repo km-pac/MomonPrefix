@@ -43,7 +43,7 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 		print(response)
 		data = response.text
 		try:
-			bgp_ip = [line for line in data.split() if "netname" in line]
+			bgp_ip = [line for line in data.split() if "inetnum" in line]
 			print(bgp_ip)
 		except: continue
 
