@@ -97,10 +97,10 @@ def extract_final_hop(bgp_network):
 								isValidHop = last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
 								isValidHop = True
 			except: continue
-			print(count+1)
-			print(bgp_network)
-			print(ip)
-			print(last_hops)
+		print(count+1)
+		print(bgp_network)
+		print(ip)
+		print(last_hops)
 		
 
 	
