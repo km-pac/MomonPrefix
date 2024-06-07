@@ -86,9 +86,9 @@ def extract_final_hop(bgp_network):
 			try:
 				command = f"mtr --report {ip}"
 				process = os.popen(command)
-				for count, line in enumerate(process):
-					print(count)
-					# hops.append(line)
+				for line in process: hops.append(line)
+				for count, line in enumerate(hops):
+					if count == len(hops)-2: print(line)
 
 			except: continue
 			print(f"{count+1:<{index_spacing}} {bgp_prefix[count]:<{ip_spacing}} {ip:<{ip_spacing}} {last_hop[count]:<{ip_spacing}}")
