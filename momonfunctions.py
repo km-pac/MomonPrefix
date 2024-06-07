@@ -100,7 +100,7 @@ def extract_final_hop(bgp_network):
 			print(count+1)
 			print(bgp_network)
 			print(ip)
-			print(last_hops[count])
+			print(last_hops)
 		
 
 	
