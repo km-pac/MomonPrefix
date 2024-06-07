@@ -14,7 +14,6 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G996U Build\\/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36',
 }
 file_path = "clientips.txt"
-os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 bgp_networks = extract_bgp_network(target_url, headers, unique_ips)
@@ -23,6 +22,7 @@ bgp_netname = extract_netname("BGP", target_url, headers, bgp_networks)
 alive_addresses, last_hops = extract_final_hop(bgp_networks)
 last_hops_netname = extract_netname("LAST LOP", target_url, headers, last_hops)
 
+os.system("clear")
 print(f"{loading_style}\n{' ':<{title_spacing}}TWMON SUMMARY: TO BE EXPORTED{'>> ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}} {'LAST HOP ISP':<{ip_spacing}}")
 for count, bgp_prefix in enumerate(bgp_networks):
     print(f"{loading_style}{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{ip_spacing}} {last_hops[count]:<{ip_spacing}} {last_hops_netname[count]:<{ip_spacing}}")
