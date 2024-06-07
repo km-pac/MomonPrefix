@@ -65,6 +65,10 @@ def extract_final_hop(bgp_network):
 		isAlive = False
 		print(f"Checking Pingable IPs on {bgp_prefix}", end=f"{': ':<10}", flush=True)
 		
+		loading_frames = ["|","/","-","\\",]
+		for frame in loading_frames:
+			print(frame, end="\r") 
+		
 		try:
 			command = f"fping -g {bgp_prefix}"
 			process = os.popen(command)
