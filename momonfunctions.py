@@ -54,13 +54,13 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 			bgp_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
 			parsed_bgp_netname = bgp_ip.split(":")[1].strip()
 			bgp_netname.append(parsed_bgp_netname)
-			print(f"{count+1:<5} {network:<25} {parsed_bgp_netname:<25}")
+			print(f"{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_bgp_netname:<{ip_spacing}}")
 		except: continue
 	return bgp_netname
 
 def extract_final_hop(bgp_network):
 	alive_addresses = list()
-	print(f"\n{' ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n")
+	print(f"{' ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}}")
 	for count, bgp_prefix in enumerate(bgp_network):
 		isAlive = False
 		print(f"Checking Pingable IPs on {bgp_prefix}", end=f"{': ':<10}", flush=True)
@@ -72,12 +72,12 @@ def extract_final_hop(bgp_network):
 				if "alive" in line:
 					isAlive = True
 					alive_addresses.append(line.split(" ")[0].strip())
-					print(f"found {alive_addresses[count]}")
+					
 					break
 			if not isAlive: 
 				alive_addresses.append("N/A")
-				print(f"No Alive Addresses") 
 		except: continue
+		print(f"{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{ip_spacing}}")
 	print(alive_addresses)
 	return 0
 
