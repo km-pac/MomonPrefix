@@ -77,7 +77,7 @@ def extract_final_hop(bgp_network):
 			if not isAlive: 
 				alive_addresses.append("N/A")
 		except: continue
-		print(f"{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{ip_spacing}}")
+		print(f"{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{50}}")
 
 	print(f"\n{' ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
 	for count, ip in enumerate(alive_addresses):
@@ -91,7 +91,7 @@ def extract_final_hop(bgp_network):
 					if count == len(hops)-2: print(line)
 
 			except: continue
-			print(f"{count+1:<{index_spacing}} {bgp_prefix[count]:<{ip_spacing}} {ip:<{ip_spacing}} {last_hop[count]:<{ip_spacing}}")
+			# print(f"{count+1:<{index_spacing}} {bgp_prefix[count]:<{ip_spacing}} {ip:<{ip_spacing}} {last_hop[count]:<{ip_spacing}}")
 
 	
 	
