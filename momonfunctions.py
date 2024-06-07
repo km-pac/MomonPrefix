@@ -63,6 +63,7 @@ def extract_final_hop(bgp_network):
 		output = os.popen(f"fping -g {bgp_prefix}")
 		if "alive" in output:
 			trace_ip = output
+			break
 		print(trace_ip)
 	return 0
 
