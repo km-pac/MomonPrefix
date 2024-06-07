@@ -92,13 +92,13 @@ def extract_final_hop(bgp_network):
 					for line in process: hops.append(line)
 					for count, line in enumerate(hops):
 						if count == len(hops)-2: 
-							print(line)
 							if "???" in line: isValidHop = False
 							else:
 								isValidHop = last_hop.append(line.split("-- ")[1].split(" ")[0].strip())
 								isValidHop = True
 			except: continue
-		print(f"{count+1:<{index_spacing}} {bgp_prefix[count]:<{ip_spacing}} {ip:<{ip_spacing}} {last_hop[count]:<{ip_spacing}}")
+			print(last_hop)
+		# print(f"{count+1:<{index_spacing}} {bgp_prefix[count]:<{ip_spacing}} {ip:<{ip_spacing}} {last_hop[count]:<{ip_spacing}}")
 
 	
 	
