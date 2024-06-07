@@ -24,7 +24,6 @@ def extract_parse_clients(file_path):
 		extracted_ips = [line.strip() for line in lines]
 		unique_ips = sorted(list(set(extracted_ips)))
 		print(f"{sub_style}EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
-	time.sleep(timeout_count)
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(target_url, headers, unique_ips):
