@@ -59,7 +59,10 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 	return bgp_netname
 
 def extract_final_hop(bgp_network):
-	for count, ip in enumerate(bgp_network):
-		print(count, ip)
+	for count, bgp_prefix in enumerate(bgp_network):
+		output = os.popen(f"fping -g {bgp_prefix}")
+		if "alive" in output:
+			trace_ip = output
+		print(trace_ip)
 	return 0
 
