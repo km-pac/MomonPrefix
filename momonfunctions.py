@@ -58,3 +58,7 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 		except: continue
 	return bgp_netname
 
+def extract_next_hop(bgp_network):
+	for count, ip in enumerate(bgp_network):
+		print(count, ip)
+

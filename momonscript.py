@@ -2,6 +2,7 @@ import os
 from momonfunctions import extract_parse_clients
 from momonfunctions import extract_bgp_network
 from momonfunctions import extract_bgp_netname
+from momonfunctions import extract_next_hop
 
 target_url = "https://bgp.he.net/ip/"
 headers = {
@@ -14,4 +15,4 @@ extracted_ips, unique_ips = extract_parse_clients(file_path)
 bgp_networks = extract_bgp_network(target_url, headers, unique_ips)
 bgp_netname = extract_bgp_netname(target_url, headers, bgp_networks)
 
-print(bgp_networks, bgp_netname)
+extract_next_hop(bgp_network)
