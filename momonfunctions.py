@@ -3,7 +3,7 @@ from colorama import Fore, Style, init
 
 init(autoreset = True)
 
-title_spacing = 10
+title_spacing = 2
 index_spacing = 5
 ip_spacing = 22
 
@@ -66,7 +66,7 @@ def extract_final_hop(bgp_network):
 	alive_addresses = list()
 	last_hops = list()
 	hops = list()
-	print(f"{title_style}\n{' ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}}")
+	print(f"{title_style}\n{'>>':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}}")
 	for count, bgp_prefix in enumerate(bgp_network):
 		isAlive = False
 		print(f"{' ':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {loading_style}Checking for Pingable IPs", end="\r", flush=True)
