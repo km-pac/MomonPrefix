@@ -25,7 +25,7 @@ def extract_parse_clients(file_path):
 def extract_bgp_network(target_url, headers, unique_ips):
 	parsed_bgp_networks = list()
 	bgp_networks = list()
-	print(f"{' ':<{title_spacing}}EXTRACTING BGP NETWORK{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGHT':<{ip_spacing}}")
+	print(f"{' ':<{title_spacing}}EXTRACTING BGP NETWORK{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGTH':<{ip_spacing}}")
 
 	for count, ip in enumerate(unique_ips):
 		response = requests.get(target_url + ip, headers=headers)
@@ -62,7 +62,7 @@ def extract_final_hop(bgp_network):
 	for count, bgp_prefix in enumerate(bgp_network):
 		print(f"Checking if {bgp_prefix} is Alive")
 		output = os.system(f"fping -g {bgp_prefix}")
-		print(output)
+		print(output, count)
 		if "alive" in output:
 			trace_ip = output
 			break
