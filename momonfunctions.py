@@ -36,6 +36,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{count+1:<{index_spacing}} {ip:<{ip_spacing}} {parsed_network_ip:<{ip_spacing}}")
 		except: continue
+		if count == 10: break
 	bgp_networks = sorted(set(parsed_bgp_networks))
 	print(f"\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}\n")
 	return bgp_networks
@@ -56,3 +57,4 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 			print(f"{count+1:<5} {network:<25} {parsed_bgp_netname:<25}")
 		except: continue
 	return bgp_netname
+
