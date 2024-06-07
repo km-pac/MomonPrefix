@@ -70,8 +70,9 @@ def extract_final_hop(bgp_network):
 			for line in process:
 				if "alive" in line:
 					alive_addresses.append(line.split(" ")[0].strip())
-					print(f"\rFOUND {alive_addresses}")
+					print(f"Found {alive_addresses}")
 					break
+					print(f"No PINGABLE IP address found")
 		except: continue
 	print(alive_addresses)
 	return 0
