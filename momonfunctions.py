@@ -5,7 +5,7 @@ init(autoreset = True)
 
 title_spacing = 10
 index_spacing = 5
-ip_spacing = 25
+ip_spacing = 22
 
 title_style = Fore.CYAN + Style.BRIGHT
 loading_style = Fore.GREEN + Style.BRIGHT
