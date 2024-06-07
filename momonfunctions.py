@@ -81,22 +81,22 @@ def extract_final_hop(bgp_network):
 
 	print(f"\n{' ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
 	for count, ip in enumerate(alive_addresses):
-		isValidHop = False
-		if "N/A" in ip: last_hops.append("N/A")
-		else:
-			try:
-				while isValidHop != True:
-					print(f"{' ':<{index_spacing}} {bgp_network[count]:<{ip_spacing}} {ip:<{ip_spacing}} Checking for Last Hop", end="\r", flush=True)
-					command = f"mtr -r -n -u {ip}"
-					process = os.popen(command)
-					for line in process: hops.append(line)
-					for count, line in enumerate(hops):
-						if count == len(hops)-2: 
-							if "???" in line: isValidHop = False
-							else:
-								isValidHop = last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
-								isValidHop = True
-			except: continue
+		# isValidHop = False
+		# if "N/A" in ip: last_hops.append("N/A")
+		# else:
+		# 	try:
+		# 		while isValidHop != True:
+		# 			print(f"{' ':<{index_spacing}} {bgp_network[count]:<{ip_spacing}} {ip:<{ip_spacing}} Checking for Last Hop", end="\r", flush=True)
+		# 			command = f"mtr -r -n -u {ip}"
+		# 			process = os.popen(command)
+		# 			for line in process: hops.append(line)
+		# 			for count, line in enumerate(hops):
+		# 				if count == len(hops)-2: 
+		# 					if "???" in line: isValidHop = False
+		# 					else:
+		# 						isValidHop = last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
+		# 						isValidHop = True
+		# 	except: continue
 		print(count+1)
 		print(bgp_network)
 		print(ip)
