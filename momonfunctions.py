@@ -63,7 +63,7 @@ def extract_final_hop(bgp_network):
 	print(f"\n{' ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n")
 	for count, bgp_prefix in enumerate(bgp_network):
 		isAlive = False
-		print(f"Checking Pingable IPs on {bgp_prefix} subnet:{' ':<25}", end=" ", flush=True)
+		print(f"Checking Pingable IPs on {bgp_prefix:<25}", end=" ", flush=True)
 		
 		try:
 			command = f"fping -g {bgp_prefix}"
