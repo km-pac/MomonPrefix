@@ -81,6 +81,7 @@ def extract_final_hop(bgp_network):
 
 	print(f"\n{' ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
 	for count, ip in enumerate(alive_addresses):
+		isValidHop = False
 		if "N/A" in ip: last_hop.append("N/A")
 		else:
 			try:
