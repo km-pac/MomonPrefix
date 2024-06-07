@@ -84,7 +84,7 @@ def extract_final_hop(bgp_network):
 		if "N/A" in ip: last_hop.append("N/A")
 		else:
 			try:
-				command = f"mtr --report {ip}"
+				command = f"mtr -r -n -u {ip}"
 				process = os.popen(command)
 				for line in process: hops.append(line)
 				for count, line in enumerate(hops):
