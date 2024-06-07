@@ -3,7 +3,7 @@ from colorama import Fore, Style, init
 
 init(autoreset = True)
 
-title_spacing = 3
+title_spacing = 5
 index_spacing = 5
 ip_spacing = 22
 
@@ -48,7 +48,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 def extract_netname(category ,target_url, headers, networks):
 	parsed_netname = list()
 	network_netname = list()
-	print(f"{title_style}\n{' ':<{title_spacing}}EXTRACTING {category} NETNAME{'>> ':<{title_spacing}}\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
+	print(f"{title_style}\n{'>> ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
 
 	for count, network in enumerate(networks):
 		parsed_network = network.strip().split("/")[0]
