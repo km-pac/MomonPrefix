@@ -65,7 +65,7 @@ def extract_final_hop(bgp_network):
 		print(f"Checking Pingable IPs on {bgp_prefix} subnet")
 		
 		try:
-			command = f"fping -q -a -s -g {bgp_prefix}"
+			command = f"fping -g {bgp_prefix}"
 			process = os.popen(command)
 			for line in process:
 				print(line, end='\r', flush=True)
