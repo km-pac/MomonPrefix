@@ -79,7 +79,7 @@ def extract_final_hop(bgp_network):
 		print(f"{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{ip_spacing}}")
 
 	for count, ip in enumerate(alive_addresses):
-		if ip.isalpha(): print("BAD")#last_hop.append("N/A")
+		if "N/A" in ip: print("BAD") #last_hop.append("N/A")
 		else: print("GOOD")
 	
 	
