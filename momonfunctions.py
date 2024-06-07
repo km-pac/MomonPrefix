@@ -60,18 +60,19 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 
 def extract_final_hop(bgp_network):
 	alive_addresses = list()
-	isAlive = False
 	print(f"\n{' ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n")
 	for count, bgp_prefix in enumerate(bgp_network):
-		print(f"Checking Pingable IPs on {bgp_prefix} subnet: ")
+		isAlive = False
+		print(f"Checking Pingable IPs on {bgp_prefix} subnet: ", end=" " flush=True)
 		
 		try:
 			command = f"fping -g {bgp_prefix}"
 			process = os.popen(command)
 			for line in process:
 				if "alive" in line:
-					alive_addresses.append(line.split(" ")[0].strip())
 					isAlive = True
+					alive_addresses.append(line.split(" ")[0].strip())
+					print(f"found {alive_addresses[count]}")
 					break
 				if not isAlive: print(f"No Alive Addresses") 
 		except: continue
