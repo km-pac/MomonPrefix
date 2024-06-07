@@ -85,7 +85,8 @@ def extract_final_hop(bgp_network):
 		if "N/A" in ip: last_hop.append("N/A")
 		else:
 			try:
-				while isValidHop != True: 
+				while isValidHop != True:
+					print(f"{' ':<{index_spacing}} {bgp_prefix[count]:<{ip_spacing}} {ip:<{ip_spacing}} Checking for Last Hop", end="\r", flush=True)
 					command = f"mtr -r -n -u {ip}"
 					process = os.popen(command)
 					for line in process: hops.append(line)
@@ -93,10 +94,11 @@ def extract_final_hop(bgp_network):
 						if count == len(hops)-2: 
 							print(line)
 							if "???" in line: isValidHop = False
-							else: isValidHop = True
-
+							else:
+								isValidHop = last_hop.append(line.split("-- ")[1].split(" ")[0].strip())
+								isValidHop = True
 			except: continue
-			# print(f"{count+1:<{index_spacing}} {bgp_prefix[count]:<{ip_spacing}} {ip:<{ip_spacing}} {last_hop[count]:<{ip_spacing}}")
+		print(f"{count+1:<{index_spacing}} {bgp_prefix[count]:<{ip_spacing}} {ip:<{ip_spacing}} {last_hop[count]:<{ip_spacing}}")
 
 	
 	
