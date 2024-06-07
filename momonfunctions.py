@@ -67,7 +67,7 @@ def extract_final_hop(bgp_network):
 		
 		loading_frames = ["|","/","-","\\",]
 		for frame in loading_frames:
-			print(frame, end="\r") 
+			print(f"\r{frame}", end=" ") 
 		
 		try:
 			command = f"fping -g {bgp_prefix}"
