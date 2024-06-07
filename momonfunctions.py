@@ -42,13 +42,13 @@ def extract_bgp_network(target_url, headers, unique_ips):
 		except: continue
 		if count == 3: break
 	bgp_networks = sorted(set(parsed_bgp_networks))
-	print(f"{sub_style}\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}\n")
+	print(f"{sub_style}\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}")
 	return bgp_networks
 
 def extract_netname(category ,target_url, headers, networks):
 	parsed_netname = list()
 	network_netname = list()
-	print(f"{title_style}{' ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
+	print(f"{title_style}\n{' ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
 
 	for count, network in enumerate(networks):
 		parsed_network = network.strip().split("/")[0]
