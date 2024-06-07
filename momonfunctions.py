@@ -1,5 +1,6 @@
 import requests, os, time
 from colorama import Fore, Style, init
+from IPy import IP
 
 init(autoreset = True)
 
@@ -98,11 +99,15 @@ def extract_final_hop(bgp_network):
 					process = os.popen(command)
 					for line in process: hops.append(line)
 					for count, line in enumerate(hops):
-						if count == len(hops)-2: 
+						dec_count = 2
+						if count == len(hops)-dec_count: 
 							if "???" in line: isValidHop = False
 							else:
-								isValidHop = last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
-								isValidHop = True
+								hop = last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
+								if IP(hop).iptype() != "PUBLIC": 
+									dec_count += 1
+									isValidHop = False
+								else: isValidHop = True
 			except: continue
 		print(f"{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
 	time.sleep(timeout_count)
