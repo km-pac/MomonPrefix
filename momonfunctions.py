@@ -61,8 +61,15 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 def extract_final_hop(bgp_network):
 	for count, bgp_prefix in enumerate(bgp_network):
 		print(f"Checking if {bgp_prefix} is Alive")
-		output = os.popen(f"fping -g {bgp_prefix}").read()
-		print(output, count+1)
-		print("alive" in output)
+		
+		try:
+			command = f"fping -g {bgp_prefix}"
+			process = os.popen(command)
+			for line in process:
+				if "alive" in line:
+					alive_address = line.split(" ")[0].strip()
+					print(alive_address)
+					break
+		except: continue
 	return 0
 
