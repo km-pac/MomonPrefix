@@ -71,5 +71,6 @@ def extract_final_hop(bgp_network):
 					alive_addresses.append(line.split(" ")[0].strip())
 					break
 		except: continue
+	print(alive_addresses)
 	return 0
 
