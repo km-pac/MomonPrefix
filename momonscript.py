@@ -1,8 +1,13 @@
 import os
+from colorama import Fore, Style, init
 from momonfunctions import extract_parse_clients
 from momonfunctions import extract_bgp_network
 from momonfunctions import extract_netname
 from momonfunctions import extract_final_hop
+from momonfunctions import title_style, sub_style
+from momonfunctions import title_spacing, index_spacing, ip_spacing
+
+init(autoreset = True)
 
 target_url = "https://bgp.he.net/ip/"
 headers = {
@@ -18,5 +23,6 @@ bgp_netname = extract_netname("BGP", target_url, headers, bgp_networks)
 alive_addresses, last_hops = extract_final_hop(bgp_networks)
 last_hops_netname = extract_netname("LAST LOP", target_url, headers, last_hops)
 
+print(f"{sub_style}\n{' ':<{title_spacing}}TWMON SUMMARY: TO BE EXPORTED{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'BGP ISP':<{ip_spacing}}  {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}} {'LAST HOP ISP':<{ip_spacing}}")
 for count, bgp_prefix in enumerate(bgp_networks):
-    print(count, bgp_prefix, bgp_netname[count], alive_addresses[count], last_hops[count], last_hops_netname[count])
+    print(f"{count+1:<{index_spacing}} {bgp_netname[count]:<{ip_spacing}} {alive_addresses[count]:<{ip_spacing}} {last_hops[count]:<{ip_spacing}} {last_hops_netname[count]:<{ip_spacing}}")
