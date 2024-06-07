@@ -61,10 +61,11 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 def extract_final_hop(bgp_network):
 	alive_addresses = list()
 	last_hop = list()
+	hops = list()
 	print(f"\n{' ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}}")
 	for count, bgp_prefix in enumerate(bgp_network):
 		isAlive = False
-		print(f"Checking for Pingable IPs for subnet {bgp_prefix}", end="\r", flush=True)
+		print(f"{' ':<{index_spacing}}Checking for Pingable IPs for subnet {bgp_prefix}", end="\r", flush=True)
 		try:
 			command = f"fping -g {bgp_prefix}"
 			process = os.popen(command)
@@ -79,8 +80,16 @@ def extract_final_hop(bgp_network):
 		print(f"{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{ip_spacing}}")
 
 	for count, ip in enumerate(alive_addresses):
-		if "N/A" in ip: print("BAD") #last_hop.append("N/A")
-		else: print("GOOD")
+		if "N/A" in ip: last_hop.append("N/A")
+		else:
+			try:
+				command = f"mtr {ip}"
+				process = os.popen(command)
+				for line in process:
+					hops.append(line)
+			except: continue
+			print(hops)
+
 	
 	
 	return alive_addresses
