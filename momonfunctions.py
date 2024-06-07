@@ -63,5 +63,6 @@ def extract_final_hop(bgp_network):
 		print(f"Checking if {bgp_prefix} is Alive")
 		output = os.system(f"fping -g {bgp_prefix}")
 		print(output, count+1)
+		print("alive" in output)
 	return 0
 
