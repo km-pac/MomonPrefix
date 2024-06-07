@@ -19,7 +19,6 @@ os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 bgp_networks = extract_bgp_network(target_url, headers, unique_ips)
 
-time.sleep(2)
 os.system("clear")
 bgp_netname = extract_netname("BGP", target_url, headers, bgp_networks)
 

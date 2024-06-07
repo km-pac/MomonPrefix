@@ -1,4 +1,4 @@
-import requests, os
+import requests, os, time
 from colorama import Fore, Style, init
 
 init(autoreset = True)
@@ -6,7 +6,7 @@ init(autoreset = True)
 title_spacing = 5
 index_spacing = 5
 ip_spacing = 22
-
+timeout_count = 5
 title_style = Fore.CYAN + Style.BRIGHT
 loading_style = Fore.GREEN + Style.BRIGHT
 sub_style = Fore.MAGENTA + Style.BRIGHT
@@ -24,6 +24,7 @@ def extract_parse_clients(file_path):
 		extracted_ips = [line.strip() for line in lines]
 		unique_ips = sorted(list(set(extracted_ips)))
 		print(f"{sub_style}EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
+	time.sleep(timeout_count)
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(target_url, headers, unique_ips):
@@ -43,6 +44,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 		# if count == 3: break
 	bgp_networks = sorted(set(parsed_bgp_networks))
 	print(f"{sub_style}\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}")
+	time.sleep(timeout_count)
 	return bgp_networks
 
 def extract_netname(category ,target_url, headers, networks):
@@ -60,6 +62,7 @@ def extract_netname(category ,target_url, headers, networks):
 			network_netname.append(parsed_netname)
 			print(f"{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{ip_spacing}}")
 		except: continue
+	time.sleep(timeout_count)
 	return network_netname
 
 def extract_final_hop(bgp_network):
@@ -82,7 +85,8 @@ def extract_final_hop(bgp_network):
 				alive_addresses.append("N/A")
 		except: continue
 		print(f"{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{50}}")
-
+	
+	time.sleep(timeout_count)
 	print(f"{title_style}\n{'>> ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
 	for maincount, alive_ip in enumerate(alive_addresses):
 		isValidHop = False
@@ -102,4 +106,5 @@ def extract_final_hop(bgp_network):
 								isValidHop = True
 			except: continue
 		print(f"{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
+	time.sleep(timeout_count)
 	return alive_addresses, last_hops
