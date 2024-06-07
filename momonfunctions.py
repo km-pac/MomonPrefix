@@ -99,7 +99,7 @@ def extract_final_hop(bgp_network):
 			except: continue
 		print(maincount+1)
 		print(bgp_network[maincount])
-		print(ip)
+		print(alive_ip)
 		print(last_hops[maincount])
 		
 
