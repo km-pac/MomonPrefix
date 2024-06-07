@@ -10,6 +10,7 @@ ip_spacing = 25
 title_style = Fore.CYAN + Style.BRIGHT
 loading_style = Fore.GREEN + Style.BRIGHT
 sub_style = Fore.MAGENTA + Style.BRIGHT
+warning_style = Fore.RED + Style.BRIGHT
 
 class ExtractedIP:
 	def	__init__(self, client_ip, bgp_network, isp_netname):
@@ -44,22 +45,22 @@ def extract_bgp_network(target_url, headers, unique_ips):
 	print(f"{sub_style}\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}\n")
 	return bgp_networks
 
-def extract_bgp_netname(target_url, headers, bgp_networks):
-	parsed_bgp_netname = list()
-	bgp_netname = list()
-	print(f"{title_style}{' ':<{title_spacing}}EXTRACTING BGP NETNAME{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
+def extract_netname(category ,target_url, headers, networks):
+	parsed_netname = list()
+	network_netname = list()
+	print(f"{title_style}{' ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
 
-	for count, network in enumerate(bgp_networks):
+	for count, network in enumerate(networks):
 		parsed_network = network.strip().split("/")[0]
 		response = requests.get(target_url + parsed_network, headers=headers)
 		data = response.text
 		try:
-			bgp_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
-			parsed_bgp_netname = bgp_ip.split(":")[1].strip()
-			bgp_netname.append(parsed_bgp_netname)
-			print(f"{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_bgp_netname:<{ip_spacing}}")
+			network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
+			parsed_netname = network_ip.split(":")[1].strip()
+			network_netname.append(parsed_netname)
+			print(f"{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{ip_spacing}}")
 		except: continue
-	return bgp_netname
+	return network_netname
 
 def extract_final_hop(bgp_network):
 	alive_addresses = list()
@@ -82,7 +83,7 @@ def extract_final_hop(bgp_network):
 		except: continue
 		print(f"{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{50}}")
 
-	print(f"\n{' ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
+	print(f"{title_style}\n{' ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
 	for maincount, alive_ip in enumerate(alive_addresses):
 		isValidHop = False
 		if "N/A" in alive_ip: last_hops.append("N/A")
