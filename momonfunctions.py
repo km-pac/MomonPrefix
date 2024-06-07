@@ -60,6 +60,7 @@ def extract_bgp_netname(target_url, headers, bgp_networks):
 
 def extract_final_hop(bgp_network):
 	alive_addresses = list()
+	print(f"\n{' ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n\n")
 	for count, bgp_prefix in enumerate(bgp_network):
 		print(f"Checking Pingable IPs on {bgp_prefix} subnet")
 		
