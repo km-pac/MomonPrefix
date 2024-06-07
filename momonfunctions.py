@@ -19,7 +19,7 @@ def extract_parse_clients(file_path):
 		lines = file.readlines() 
 		extracted_ips = [line.strip() for line in lines]
 		unique_ips = sorted(list(set(extracted_ips)))
-		print(f"EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQE CLIENT IPs: {len(unique_ips)}\n")
+		print(f"EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(target_url, headers, unique_ips):
@@ -65,7 +65,7 @@ def extract_final_hop(bgp_network):
 	print(f"\n{' ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}}")
 	for count, bgp_prefix in enumerate(bgp_network):
 		isAlive = False
-		print(f"{' ':<{index_spacing}}Checking for Pingable IPs for subnet {bgp_prefix}", end="\r", flush=True)
+		print(f"{' ':<{index_spacing-1}}>>Checking for Pingable IPs for subnet {bgp_prefix}", end="\r", flush=True)
 		try:
 			command = f"fping -g {bgp_prefix}"
 			process = os.popen(command)
@@ -79,16 +79,19 @@ def extract_final_hop(bgp_network):
 		except: continue
 		print(f"{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{ip_spacing}}")
 
+	print(f"\n{' ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
 	for count, ip in enumerate(alive_addresses):
 		if "N/A" in ip: last_hop.append("N/A")
 		else:
 			try:
 				command = f"mtr --report {ip}"
 				process = os.popen(command)
-				for line in process:
-					hops.append(line)
+				for count, line in enumerate(process):
+					print(count)
+					# hops.append(line)
+
 			except: continue
-			print(hops)
+			print(f"{count+1:<{index_spacing}} {bgp_prefix[count]:<{ip_spacing}} {ip:<{ip_spacing}} {last_hop[count]:<{ip_spacing}}")
 
 	
 	
