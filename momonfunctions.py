@@ -80,7 +80,7 @@ def extract_final_hop(bgp_network):
 		print(f"{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{50}}")
 
 	print(f"\n{' ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
-	for count, ip in enumerate(alive_addresses):
+	for maincount, ip in enumerate(alive_addresses):
 		isValidHop = False
 		if "N/A" in ip: last_hops.append("N/A")
 		else:
@@ -90,7 +90,7 @@ def extract_final_hop(bgp_network):
 					command = f"mtr -r -n -u {ip}"
 					process = os.popen(command)
 					for line in process: hops.append(line)
-					for count, line in enumerate(hops):
+					for line in enumerate(hops):
 						if count == len(hops)-2: 
 							if "???" in line: isValidHop = False
 							else:
@@ -98,10 +98,10 @@ def extract_final_hop(bgp_network):
 								isValidHop = True
 								break
 			except: continue
-		print(count+1)
-		print(bgp_network)
+		print(maincount+1)
+		print(bgp_network[maincount])
 		print(ip)
-		print(last_hops)
+		print(last_hops[maincount])
 		
 
 	
