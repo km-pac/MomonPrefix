@@ -64,13 +64,7 @@ def extract_final_hop(bgp_network):
 	for count, bgp_prefix in enumerate(bgp_network):
 		isAlive = False
 		print(f"Checking Pingable IPs on {bgp_prefix}", end=f"{': ':<10}", flush=True)
-		
-		loading_frames = ["|","/","-","\\",]
-		try:
-			for frame in loading_frames:
-				print(f"{frame}", end="\r") 
-		except: continue
-		
+
 		try:
 			command = f"fping -g {bgp_prefix}"
 			process = os.popen(command)
