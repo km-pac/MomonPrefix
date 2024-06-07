@@ -29,7 +29,7 @@ def extract_parse_clients(file_path):
 def extract_bgp_network(target_url, headers, unique_ips):
 	parsed_bgp_networks = list()
 	bgp_networks = list()
-	print(f"{title_style}{' ':<{title_spacing}}EXTRACTING BGP NETWORK{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGTH':<{ip_spacing}}")
+	print(f"{title_style}{' ':<{title_spacing}}EXTRACTING BGP NETWORK{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGTH':<{ip_spacing}}")
 
 	for count, ip in enumerate(unique_ips):
 		response = requests.get(target_url + ip, headers=headers)
@@ -48,7 +48,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 def extract_netname(category ,target_url, headers, networks):
 	parsed_netname = list()
 	network_netname = list()
-	print(f"{title_style}\n{' ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
+	print(f"{title_style}\n{' ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
 
 	for count, network in enumerate(networks):
 		parsed_network = network.strip().split("/")[0]
@@ -66,7 +66,7 @@ def extract_final_hop(bgp_network):
 	alive_addresses = list()
 	last_hops = list()
 	hops = list()
-	print(f"{title_style}\n{' ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}}")
+	print(f"{title_style}\n{' ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}}")
 	for count, bgp_prefix in enumerate(bgp_network):
 		isAlive = False
 		print(f"{' ':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {loading_style}Checking for Pingable IPs", end="\r", flush=True)
@@ -83,7 +83,7 @@ def extract_final_hop(bgp_network):
 		except: continue
 		print(f"{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{50}}")
 
-	print(f"{title_style}\n{' ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
+	print(f"{title_style}\n{' ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
 	for maincount, alive_ip in enumerate(alive_addresses):
 		isValidHop = False
 		if "N/A" in alive_ip: last_hops.append("N/A")
