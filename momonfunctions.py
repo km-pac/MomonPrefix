@@ -68,6 +68,7 @@ def extract_final_hop(bgp_network):
 			command = f"fping -g {bgp_prefix}"
 			process = os.popen(command)
 			for line in process:
+				print(line, end='\r', flush=True)
 				if "alive" in line:
 					alive_addresses.append(line.split(" ")[0].strip())
 					print(bgp_network, alive_addresses)
