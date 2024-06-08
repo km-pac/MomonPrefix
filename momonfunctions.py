@@ -104,7 +104,8 @@ def extract_final_hop(bgp_network):
 						if count == len(hops)-2: 
 							if "???" in line: isValidHop = False
 							else:
-								last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
+								hop = last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
+								print(hop, IP(hop).iptype())
 								isValidHop = True
 			except: continue
 		print(f"{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
