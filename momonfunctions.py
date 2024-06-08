@@ -11,7 +11,7 @@ timeout_count = 5
 title_style = Fore.CYAN + Style.BRIGHT
 loading_style = Fore.GREEN + Style.BRIGHT
 sub_style = Fore.MAGENTA + Style.BRIGHT
-warning_style = Fore.RED + Style.BRIGHT
+error_style = Fore.RED + Style.BRIGHT
 
 class ExtractedIP:
 	def	__init__(self, client_ip, bgp_network, isp_netname):
@@ -104,9 +104,12 @@ def extract_final_hop(bgp_network):
 					for count, line in enumerate(hops):
 						if count == len(hops)-dec_count:
 							extracted_hop = line.split("-- ")[1].split(" ")[0].strip()
-							print(f"==================={extracted_hop}=============")
-							if "???" in line: isValidHop = False
+							if "???" in line:
+								print(f"{error_style}{maincount+1:<{index_spacing}} ERROR: {extracted_hop} cannot be determined{' ':<{ip_spacing}}")
+								dec_count += 1
+								isValidHop = False
 							elif IP(extracted_hop).iptype() != "PUBLIC":
+								print(f"{error_style}{maincount+1:<{index_spacing}} ERROR: {extracted_hop} is not a PUBLIC IP{' ':<{ip_spacing}}")
 								dec_count += 1
 								isValidHop = False
 							else:
