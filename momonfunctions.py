@@ -1,5 +1,7 @@
 import requests, os, time
 from colorama import Fore, Style, init
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 from IPy import IP
 
 init(autoreset = True)
@@ -35,8 +37,16 @@ def extract_bgp_network(target_url, headers, unique_ips):
 
 	for count, ip in enumerate(unique_ips):
 		print(f"{count+1:<{index_spacing}} {ip:<{ip_spacing}} {sub_style}Checking for BGP Prefix", end="\r", flush=True)
-		response = requests.get(target_url + ip, headers=headers)
+		
+		session = requests.Session()
+		retry = Retry(connect=3, backoff_factor=0.5)
+		adapter = HTTPAdapter(max_retries=retry)
+		session.mount('http://', adapter)
+		session.mount('https://', adapter)
+
+		response = session.get(target_url + ip, headers=headers)
 		data = response.text
+		
 		try: 
 			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
 			parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
