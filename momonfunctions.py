@@ -99,18 +99,13 @@ def extract_final_hop(bgp_network):
 					command = f"mtr -r -n -u {alive_ip}"
 					process = os.popen(command)
 					for line in process: hops.append(line)
-					while isPublic !=  True:
-						for count, line in enumerate(hops):
-							dec_count = 2
-							if count == len(hops)-dec_count: 
-								if "???" in line: isValidHop = False
-								else:
-									hop = last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
-									if IP(hop).iptype() == "PUBLIC": 
-										isValidHop = True
-										isPublic = True
-									else: dec_count += 1
-										
+					for count, line in enumerate(hops):
+						dec_count = 2
+						if count == len(hops)-dec_count: 
+							if "???" in line: isValidHop = False
+							else:
+								last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
+								isValidHop = True
 			except: continue
 		print(f"{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
 	time.sleep(timeout_count)
