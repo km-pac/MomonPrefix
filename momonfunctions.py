@@ -69,7 +69,14 @@ def extract_netname(category ,target_url, headers, networks):
 		else:
 			parsed_network = network.strip().split("/")[0]
 			print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {sub_style}Checking for Last BGP Netname/ISP", end="\r", flush=True)
-			response = requests.get(target_url + parsed_network, headers=headers)
+			
+			session = requests.Session()
+			retry = Retry(connect=3, backoff_factor=0.5)
+			adapter = HTTPAdapter(max_retries=retry)
+			session.mount('http://', adapter)
+			session.mount('https://', adapter)
+			
+			response = session.get(target_url + parsed_network, headers=headers)
 			data = response.text
 			try:
 				network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
@@ -89,10 +96,10 @@ def extract_final_hop(bgp_network):
 		isAlive = False
 		print(f"{' ':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {sub_style}Checking for Pingable IPs", end="\r", flush=True)
 		try:
-			command = f"timeout 35s fping -q -g {bgp_prefix}"
+			command = f"timeout 35s fping -a -q -g {bgp_prefix}"
 			process = os.popen(command)
 			for line in process:
-				if "alive" in line:
+				if line is None:
 					isAlive = True
 					alive_addresses.append(line.split(" ")[0].strip())
 					break
