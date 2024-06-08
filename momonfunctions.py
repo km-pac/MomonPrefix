@@ -90,6 +90,7 @@ def extract_final_hop(bgp_network):
 	print(f"{title_style}\n{'>> ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
 	for maincount, alive_ip in enumerate(alive_addresses):
 		isValidHop = False
+		isPublic = False
 		if "N/A" in alive_ip: last_hops.append("N/A")
 		else:
 			try:
@@ -98,16 +99,18 @@ def extract_final_hop(bgp_network):
 					command = f"mtr -r -n -u {alive_ip}"
 					process = os.popen(command)
 					for line in process: hops.append(line)
-					for count, line in enumerate(hops):
-						dec_count = 2
-						if count == len(hops)-dec_count: 
-							if "???" in line: isValidHop = False
-							else:
-								hop = last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
-								if IP(hop).iptype() != "PUBLIC": 
-									dec_count += 1
-									isValidHop = False
-								else: isValidHop = True
+					while isPublic !=  True:
+						for count, line in enumerate(hops):
+							dec_count = 2
+							if count == len(hops)-dec_count: 
+								if "???" in line: isValidHop = False
+								else:
+									hop = last_hops.append(line.split("-- ")[1].split(" ")[0].strip())
+									if IP(hop).iptype() == "PUBLIC": 
+										isValidHop = True
+										isPublic = True
+									else: dec_count += 1
+										
 			except: continue
 		print(f"{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
 	time.sleep(timeout_count)
