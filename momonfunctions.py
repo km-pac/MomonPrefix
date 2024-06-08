@@ -34,7 +34,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 	print(f"{title_style}{'>> ':<{title_spacing}}EXTRACTING BGP NETWORK{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGTH':<{ip_spacing}}")
 
 	for count, ip in enumerate(unique_ips):
-		print(f"{count+1:<{index_spacing}} {ip:<{ip_spacing}} {sub_style}Checking for Last BGP Prefix", end="\r", flush=True)
+		print(f"{count+1:<{index_spacing}} {ip:<{ip_spacing}} {sub_style}Checking for BGP Prefix", end="\r", flush=True)
 		response = requests.get(target_url + ip, headers=headers)
 		data = response.text
 		try: 
