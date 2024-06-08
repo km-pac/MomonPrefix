@@ -31,4 +31,4 @@ last_hops_netname = extract_netname("LAST LOP", target_url, headers, last_hops)
 os.system("clear")
 print(f"{loading_style}\n{'>> ':<{title_spacing}}TWMON SUMMARY: TO BE EXPORTED{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}} {'LAST HOP ISP':<{ip_spacing}}")
 for count, bgp_prefix in enumerate(bgp_networks):
-    print(f"{loading_style}{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{ip_spacing}} {last_hops[count]:<{ip_spacing}} {last_hops_netname[count]:<{ip_spacing}}")
+    print(f"{loading_style}{count:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{ip_spacing}} {last_hops[count]:<{ip_spacing}} {last_hops_netname[count]:<{ip_spacing}}")
