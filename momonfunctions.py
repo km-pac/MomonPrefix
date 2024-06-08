@@ -96,7 +96,7 @@ def extract_final_hop(bgp_network):
 		isAlive = False
 		print(f"{' ':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {sub_style}Checking for Pingable IPs", end="\r", flush=True)
 		try:
-			command = f"timeout 35s fping -a -q -g {bgp_prefix}"
+			command = f"timeout 35s fping -a -g -q {bgp_prefix}"
 			process = os.popen(command)
 			for line in process:
 				if line is not None:
@@ -106,7 +106,7 @@ def extract_final_hop(bgp_network):
 			if not isAlive: 
 				alive_addresses.append("N/A")
 		except: continue
-		print(f"{success_style}{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{50}}")
+		print(f"{success_style}{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{end_spacing}}")
 	
 	time.sleep(timeout_count)
 	print(f"{title_style}\n{'>> ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
