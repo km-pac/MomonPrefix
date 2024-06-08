@@ -34,9 +34,9 @@ def extract_bgp_network(target_url, headers, unique_ips):
 	print(f"{title_style}{'>> ':<{title_spacing}}EXTRACTING BGP NETWORK{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGTH':<{ip_spacing}}")
 
 	for count, ip in enumerate(unique_ips):
+		print(f"{count+1:<{index_spacing}} {ip:<{ip_spacing}} {sub_style}Checking for Last BGP Prefix", end="\r", flush=True)
 		response = requests.get(target_url + ip, headers=headers)
 		data = response.text
-		print(f"{count+1:<{index_spacing}} {ip:<{ip_spacing}} {sub_style}Checking for Last BGP Prefix", end="\r", flush=True)
 		try: 
 			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
 			parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
@@ -58,9 +58,9 @@ def extract_netname(category ,target_url, headers, networks):
 		if "N/A" in network: network_netname.append("N/A")
 		else:
 			parsed_network = network.strip().split("/")[0]
+			print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {sub_style}Checking for Last BGP Netname/ISP", end="\r", flush=True)
 			response = requests.get(target_url + parsed_network, headers=headers)
 			data = response.text
-			print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {sub_style}Checking for Last BGP Netname/ISP", end="\r", flush=True)
 			try:
 				network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
 				parsed_netname = network_ip.split(":")[1].strip()
