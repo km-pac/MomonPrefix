@@ -105,7 +105,7 @@ def extract_final_hop(bgp_network):
 						if count == len(hops)-dec_count:
 							extracted_hop = line.split("-- ")[1].split(" ")[0].strip()
 							if "???" in line: isValidHop = False
-							elif IP(extracted_hop).iptype() == "PRIVATE":
+							elif IP(extracted_hop).iptype() != "PUBLIC":
 								dec_count += 1
 								isValidHop = False
 							else:
