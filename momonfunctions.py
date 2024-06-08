@@ -79,7 +79,7 @@ def extract_final_hop(bgp_network):
 		isAlive = False
 		print(f"{' ':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {sub_style}Checking for Pingable IPs", end="\r", flush=True)
 		try:
-			command = f"timeout 35s fping -g {bgp_prefix}"
+			command = f"timeout 35s fping -q -g {bgp_prefix}"
 			process = os.popen(command)
 			for line in process:
 				if "alive" in line:
