@@ -36,7 +36,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 	for count, ip in enumerate(unique_ips):
 		response = requests.get(target_url + ip, headers=headers)
 		data = response.text
-		print(f"{count+1:<{index_spacing}} {ip:<{ip_spacing}} {success_style}Checking for Last BGP Prefix", end="\r", flush=True)
+		print(f"{count+1:<{index_spacing}} {ip:<{ip_spacing}} {sub_style}Checking for Last BGP Prefix", end="\r", flush=True)
 		try: 
 			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
 			parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
@@ -60,7 +60,7 @@ def extract_netname(category ,target_url, headers, networks):
 			parsed_network = network.strip().split("/")[0]
 			response = requests.get(target_url + parsed_network, headers=headers)
 			data = response.text
-			print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {success_style}Checking for Last BGP Netname/ISP", end="\r", flush=True)
+			print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {sub_style}Checking for Last BGP Netname/ISP", end="\r", flush=True)
 			try:
 				network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
 				parsed_netname = network_ip.split(":")[1].strip()
@@ -77,7 +77,7 @@ def extract_final_hop(bgp_network):
 	print(f"{title_style}\n{'>> ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}}")
 	for count, bgp_prefix in enumerate(bgp_network):
 		isAlive = False
-		print(f"{' ':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {success_style}Checking for Pingable IPs", end="\r", flush=True)
+		print(f"{' ':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {sub_style}Checking for Pingable IPs", end="\r", flush=True)
 		try:
 			command = f"timeout 35s fping -g {bgp_prefix}"
 			process = os.popen(command)
@@ -100,19 +100,19 @@ def extract_final_hop(bgp_network):
 			try:
 				dec_count = 2
 				while isValidHop != True:
-					print(f"{' ':<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {success_style}Checking for Last Hop", end="\r", flush=True)
+					print(f"{' ':<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {sub_style}Checking for Last Hop", end="\r", flush=True)
 					command = f"mtr -r -n -u {alive_ip}"
 					process = os.popen(command)
 					for line in process: hops.append(line)
 					for count, line in enumerate(hops):
-						if count == len(hops)-dec_count:
+						if count == len(hops)-(len(hops)+dec_count):
 							extracted_hop = line.split("-- ")[1].split(" ")[0].strip()
 							if "???" in line:
-								print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} cannot be determined{' ':<{ip_spacing}} HOP COUNT: {len(hops)-dec_count}")
+								print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} NULL VALUE{' ':<{ip_spacing}}")
 								dec_count += 1
 								isValidHop = False
 							elif IP(extracted_hop).iptype() != "PUBLIC":
-								print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} is not a PUBLIC IP{' ':<{ip_spacing}} HOP COUNT: {len(hops)-dec_count}")
+								print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} NOT PUBLIC IP{' ':<{ip_spacing}}")
 								dec_count += 1
 								isValidHop = False
 							else:
