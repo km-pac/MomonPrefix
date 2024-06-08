@@ -105,11 +105,11 @@ def extract_final_hop(bgp_network):
 						if count == len(hops)-dec_count:
 							extracted_hop = line.split("-- ")[1].split(" ")[0].strip()
 							if "???" in line:
-								print(f"{error_style}{maincount+1:<{index_spacing}} ERROR: {extracted_hop} cannot be determined{' ':<{ip_spacing}}")
+								print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} cannot be determined{' ':<{ip_spacing}}")
 								dec_count += 1
 								isValidHop = False
 							elif IP(extracted_hop).iptype() != "PUBLIC":
-								print(f"{error_style}{maincount+1:<{index_spacing}} ERROR: {extracted_hop} is not a PUBLIC IP{' ':<{ip_spacing}}")
+								print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} is not a PUBLIC IP{' ':<{ip_spacing}}")
 								dec_count += 1
 								isValidHop = False
 							else:
