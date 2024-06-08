@@ -53,15 +53,17 @@ def extract_netname(category ,target_url, headers, networks):
 	print(f"{title_style}\n{'>> ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
 
 	for count, network in enumerate(networks):
-		parsed_network = network.strip().split("/")[0]
-		response = requests.get(target_url + parsed_network, headers=headers)
-		data = response.text
-		try:
-			network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
-			parsed_netname = network_ip.split(":")[1].strip()
-			network_netname.append(parsed_netname)
-			print(f"{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{ip_spacing}}")
-		except: continue
+		if "N/A" in network: network_netname.append("N/A")
+		else:
+			parsed_network = network.strip().split("/")[0]
+			response = requests.get(target_url + parsed_network, headers=headers)
+			data = response.text
+			try:
+				network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
+				parsed_netname = network_ip.split(":")[1].strip()
+				network_netname.append(parsed_netname)
+				print(f"{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{ip_spacing}}")
+			except: continue
 	time.sleep(timeout_count)
 	return network_netname
 
