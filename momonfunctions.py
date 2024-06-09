@@ -178,7 +178,7 @@ def extract_final_hop(bgp_network):
 				for line in process: hops.append(line)
 				print(hops)
 				while isValidHop != True:
-					for count, hop in enumerate(len(hops),0, -1):
+					for count, hop in reversed(hops):
 						if "???" in hop:
 							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}")
 							dec_count += 1
