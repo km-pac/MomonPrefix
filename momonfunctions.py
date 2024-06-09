@@ -172,11 +172,12 @@ def extract_final_hop(bgp_network):
 			try:
 				dec_count = 2
 				print(f"{' ':<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {sub_style}Checking for Last Hop", end="\r", flush=True)
+				
 				command = f"mtr -r -n -u {alive_ip}"
 				process = os.popen(command)
 				for line in process: hops.append(line)
 				while isValidHop != True:
-					for count, hop in enumerate(hops[::-1], 1):
+					for count, hop in enumerate(len(hops),0, -1):
 						if "???" in hop:
 							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}")
 							dec_count += 1
