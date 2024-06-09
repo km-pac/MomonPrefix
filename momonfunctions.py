@@ -122,7 +122,8 @@ def extract_final_hop(bgp_network):
 					process = os.popen(command)
 					for line in process: hops.append(line)
 					for count, line in enumerate(hops):
-						if count == len(hops)-(len(hops)+dec_count):
+						print(f"COUNT:{count} LENHOP:{len(hops)} DEC:{dec_count}")
+						if count == len(hops)-dec_count:
 							extracted_hop = line.split("-- ")[1].split(" ")[0].strip()
 							if "???" in line:
 								print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} NULL VALUE{' ':<{ip_spacing}}")
