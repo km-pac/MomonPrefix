@@ -176,7 +176,9 @@ def extract_final_hop(bgp_network):
 				process = os.popen(command)
 				
 				hops = [line.split("-- ")[1].split(" ")[0] for line in process if "-- " in line]
+				print(hops)
 				for hop in reversed(hops):
+					print(f"\n{hop}")
 					if "???" in hop:
 						print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}")
 						isValidHop = False
