@@ -179,7 +179,7 @@ def extract_final_hop(bgp_network):
 				print(hops)
 				while isValidHop != True:
 					for hop in reversed(hops):
-						print(f"\n{hop}")
+						print(hop)
 						if "???" in hop:
 							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<		{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}	")
 							isValidHop = False
