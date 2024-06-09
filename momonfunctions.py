@@ -181,21 +181,18 @@ def extract_final_hop(bgp_network):
 					print(f"\n{hop}")
 					if "???" in hop:
 						print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}")
-						isValidHop = False
 					elif IP(hop).iptype() != "PUBLIC":
 						print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NOT PUBLIC IP	{' ':<{ip_spacing}}")
-						isValidHop = False
 					else:
 						last_hops.append(hop)
-						isValidHop = True
 						break
 				print(last_hops)
 				
 
-				while isValidHop != True:
-					for count, hop in reversed(hops):
-						# extracted_hop = hop.split("-- ")[1].split(" ")[0].strip()
-						print(count, hop)
+				# while isValidHop != True:
+				# 	for count, hop in reversed(hops):
+				# 		# extracted_hop = hop.split("-- ")[1].split(" ")[0].strip()
+				# 		print(count, hop)
 						
 			except: continue
 		print(f"{len(last_hops)} {last_hops}")
