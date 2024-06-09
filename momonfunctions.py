@@ -53,7 +53,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{success_style}{count+1:<{index_spacing}} {ip:<{ip_spacing}} {parsed_network_ip:<{end_spacing}}")
 		except: continue
-		if count == 30: break
+		#if count == 30: break
 	bgp_networks = sorted(set(parsed_bgp_networks))
 	print(f"{sub_style}\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}")
 	time.sleep(timeout_count)
@@ -116,7 +116,7 @@ def extract_final_hop(bgp_network):
 		else:
 			try:
 				dec_count = 2
-				hops = list()
+				hops = []
 				while isValidHop != True:
 					print(f"{' ':<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {sub_style}Checking for Last Hop", end="\r", flush=True)
 					command = f"mtr -r -n -u {alive_ip}"
