@@ -175,7 +175,7 @@ def extract_final_hop(bgp_network):
 				command = f"mtr -r -n -u {alive_ip}"
 				process = os.popen(command)
 				
-				hops = [line.split("-- ")[1].split(" ")[0] if "-- " in line else "N/A" for line in process]
+				hops = [line.split("-- ")[1].split(" ")[0] if "-- " in line]
 
 				print(hops)
 
