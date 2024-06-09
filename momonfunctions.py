@@ -116,7 +116,7 @@ def extract_final_hop(bgp_network):
 		else:
 			try:
 				dec_count = 2
-				hops = []
+				hops = list()
 				while isValidHop != True:
 					print(f"{' ':<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {sub_style}Checking for Last Hop", end="\r", flush=True)
 					command = f"mtr -r -n -u {alive_ip}"
