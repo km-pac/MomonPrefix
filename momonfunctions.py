@@ -190,6 +190,7 @@ def extract_final_hop(bgp_network):
 							isValidHop = True
 							break
 			except: continue
+		print(f"{len(last_hops)} {last_hops}")
 		print(f"{success_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
 	time.sleep(timeout_count)
 	return alive_addresses, last_hops
