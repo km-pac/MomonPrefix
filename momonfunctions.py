@@ -174,20 +174,20 @@ def extract_final_hop(bgp_network):
 				
 				command = f"mtr -r -n -u {alive_ip}"
 				process = os.popen(command)
-				for line in process: hops.append(line)
+				for line in process: hops.append(line.split("-- ")[1].split(" ")[0].strip())
 				print(hops)
 				while isValidHop != True:
 					for count, hop in reversed(hops):
-						extracted_hop = hop.split("-- ")[1].split(" ")[0].strip()
-						print(count, extracted_hop)
-						if "???" in extracted_hop:
-							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} NULL VALUE{' 	':<{ip_spacing}}")
+						# extracted_hop = hop.split("-- ")[1].split(" ")[0].strip()
+						print(count, hop)
+						if "???" in hop:
+							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}")
 							isValidHop = False
 						elif IP(hop).iptype() != "PUBLIC":
-							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} NOT PUBLIC IP	{' ':<{ip_spacing}}")
+							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NOT PUBLIC IP	{' ':<{ip_spacing}}")
 							isValidHop = False
 						else:
-							last_hops.append(extracted_hop)
+							last_hops.append(hop)
 							isValidHop = True
 							break
 			except: continue
