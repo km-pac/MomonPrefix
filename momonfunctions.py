@@ -178,7 +178,7 @@ def extract_final_hop(bgp_network):
 				hops = [line.split("-- ")[1].split(" ")[0] for line in process if "-- " in line]
 				print(hops)
 				while isValidHop != True:
-					for hop in reversed(hops):
+					for count, hop in reversed(hops):
 						print(hop)
 						if "???" in hop:
 							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<		{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}	")
