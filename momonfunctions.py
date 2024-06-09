@@ -177,15 +177,19 @@ def extract_final_hop(bgp_network):
 				
 				hops = [line.split("-- ")[1].split(" ")[0] for line in process if "-- " in line]
 				print(hops)
-				for hop in reversed(hops):
-					print(f"\n{hop}")
-					if "???" in hop:
-						print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}")
-					elif IP(hop).iptype() != "PUBLIC":
-						print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NOT PUBLIC IP	{' ':<{ip_spacing}}")
-					else:
-						last_hops.append(hop)
-						break
+				while isValidHop != True:
+					for hop in reversed(hops):
+						print(f"\n{hop}")
+						if "???" in hop:
+							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<		{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}	")
+							isValidHop = False
+						elif IP(hop).iptype() != "PUBLIC":
+							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<		{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NOT PUBLIC IP	{' ':<	{ip_spacing}}")
+							isValidHop = False
+						else:
+							last_hops.append(hop)
+							isValidHop = True
+							break
 				print(last_hops)
 				
 
