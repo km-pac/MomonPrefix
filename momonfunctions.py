@@ -87,7 +87,7 @@ def extract_netname(category ,target_url, headers, networks):
 	time.sleep(timeout_count)
 	return network_netname
 
-def extract_final_hop(bgp_network):
+# def extract_final_hop(bgp_network):
 	alive_addresses = list()
 	last_hops = list()
 	hops = list()
@@ -137,6 +137,58 @@ def extract_final_hop(bgp_network):
 							else:
 								last_hops.append(extracted_hop)
 								isValidHop = True
+			except: continue
+		print(f"{success_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
+	time.sleep(timeout_count)
+	return alive_addresses, last_hops
+
+def extract_final_hop(bgp_network):
+	alive_addresses = list()
+	last_hops = list()
+	hops = list()
+	print(f"{title_style}\n{'>> ':<{title_spacing}}EXTRACTING PINGABLE IPs PER SUBNET{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}}")
+	for count, bgp_prefix in enumerate(bgp_network):
+		isAlive = False
+		print(f"{' ':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {sub_style}Checking for Pingable IPs", end="\r", flush=True)
+		try:
+			command = f"timeout 35s fping -a -g -q {bgp_prefix}"
+			process = os.popen(command)
+			for line in process:
+				if line is not None:
+					isAlive = True
+					alive_addresses.append(line.split(" ")[0].strip())
+					break
+			if not isAlive: 
+				alive_addresses.append("N/A")
+		except: continue
+		print(f"{success_style}{count+1:<{index_spacing}} {bgp_prefix:<{ip_spacing}} {alive_addresses[count]:<{end_spacing}}")
+	
+	time.sleep(timeout_count)
+	print(f"{title_style}\n{'>> ':<{title_spacing}}FINDING THE LAST HOP PER PINGABLE ADDRESS{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'BGP IP':<{ip_spacing}} {'PINGABLE IP':<{ip_spacing}} {'LAST HOP':<{ip_spacing}}")
+	for maincount, alive_ip in enumerate(alive_addresses):
+		isValidHop = False
+		if "N/A" in alive_ip: last_hops.append("N/A")
+		else:
+			try:
+				dec_count = 2
+				print(f"{' ':<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {sub_style}Checking for Last Hop", end="\r", flush=True)
+				command = f"mtr -r -n -u {alive_ip}"
+				process = os.popen(command)
+				for line in process: hops.append(line)
+				while isValidHop != True:
+					for count, hop in enumerate(hops[::-1], 1):
+						if "???" in hop:
+							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}")
+							dec_count += 1
+							isValidHop = False
+						elif IP(hop).iptype() != "PUBLIC":
+							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NOT PUBLIC IP	{' ':<{ip_spacing}}")
+							dec_count += 1
+							isValidHop = False
+						else:
+							last_hops.append(hop)
+							isValidHop = True
+							break
 			except: continue
 		print(f"{success_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
 	time.sleep(timeout_count)
