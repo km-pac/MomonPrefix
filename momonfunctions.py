@@ -170,7 +170,6 @@ def extract_final_hop(bgp_network):
 		if "N/A" in alive_ip: last_hops.append("N/A")
 		else:
 			try:
-				dec_count = 2
 				print(f"{' ':<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {sub_style}Checking for Last Hop", end="\r", flush=True)
 				
 				command = f"mtr -r -n -u {alive_ip}"
@@ -179,16 +178,15 @@ def extract_final_hop(bgp_network):
 				print(hops)
 				while isValidHop != True:
 					for count, hop in reversed(hops):
-						if "???" in hop:
-							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NULL VALUE{' 	':<{ip_spacing}}")
-							dec_count += 1
+						extracted_hop = line.split("-- ")[1].split(" ")[0].strip()
+						if "???" in extracted_hop:
+							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} NULL VALUE{' 	':<{ip_spacing}}")
 							isValidHop = False
 						elif IP(hop).iptype() != "PUBLIC":
-							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {hop} NOT PUBLIC IP	{' ':<{ip_spacing}}")
-							dec_count += 1
+							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<	{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} NOT PUBLIC IP	{' ':<{ip_spacing}}")
 							isValidHop = False
 						else:
-							last_hops.append(hop)
+							last_hops.append(extracted_hop)
 							isValidHop = True
 							break
 			except: continue
