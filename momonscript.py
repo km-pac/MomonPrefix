@@ -20,7 +20,7 @@ extracted_ips, unique_ips = extract_parse_clients(file_path)
 bgp_networks = extract_bgp_network(target_url, headers, unique_ips)
 
 os.system("clear")
-# bgp_netname = extract_netname("BGP", target_url, headers, bgp_networks)
+bgp_netname = extract_netname("BGP", target_url, headers, bgp_networks)
 
 os.system("clear")
 alive_addresses, last_hops = extract_final_hop(bgp_networks)
