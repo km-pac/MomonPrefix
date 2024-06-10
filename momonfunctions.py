@@ -86,7 +86,7 @@ def extract_netname(category ,target_url, headers, networks):
 			print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{end_spacing}}")
 
 			if enableDebugMessage == True:
-				debug_line = f"DEBUG: {[line for line in data.split('\n') if ("descr:" in line or "Descr:" in line) or ("netname:" in line or "Netname:" in line)]}\t DETECTED NAME:{parsed_netname}\t COUNT: {len(network_netname)}"
+				debug_line = f"DEBUG: {network_ip}\t DETECTED NAME:{parsed_netname}\t COUNT: {len(network_netname)}"
 				print(debug_line)
 				os.popen(f"{debug_line} >> netname_logs.txt")
 				
