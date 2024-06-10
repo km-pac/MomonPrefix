@@ -82,9 +82,9 @@ def extract_netname(category ,target_url, headers, networks):
 			response = session.get(target_url + parsed_network, headers=headers)
 			data = response.text
 
-			# network_ip = [line for line in data.split('\n') if ("netname:" in line or "Netname:" in line) or ("descr:" in line or "Descr:" in line)][0]
+			network_ip = [line for line in data.split('\n') if ("netname:" in line or "Netname:" in line)[0]
 
-			network_ips = [line for line in data.split('\n') if ("netname:" in line or "Netname:" in line) or ("descr:" in line or "Descr:" in line)]
+			# network_ips = [line for line in data.split('\n') if ("netname:" in line or "Netname:" in line) or ("descr:" in line or "Descr:" in line)]
 			network_ip = network_ips[0] if network_ips else "N/A"
 
 			parsed_netname = network_ip.split(":")[1].strip()
