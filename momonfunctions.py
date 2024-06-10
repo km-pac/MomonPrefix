@@ -88,8 +88,7 @@ def extract_netname(category ,target_url, headers, networks):
 			data = response.text
 
 			try:
-				network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
-				print("===========",network_ip)
+				network_ip = [line for line in data.split('\n') if "descr:" in line or "Descr:" or "netname:" in line or "Netname" in line][0]
 				parsed_netname = network_ip.split(":")[1].strip()
 				network_netname.append(parsed_netname)
 				print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{end_spacing}}")
@@ -98,8 +97,7 @@ def extract_netname(category ,target_url, headers, networks):
 		if enableDebugMessage == True:
 			debug_line = f"DEBUG: DETECTED NAME: {parsed_netname} {' ':<{index_spacing}} COUNT: {len(network_netname)}\n"
 			print(debug_line)
-			os.popen(f"echo {debug_line} >> netname_logs.txt")
-				
+
 	time.sleep(timeout_count)
 	return network_netname
 
@@ -157,7 +155,6 @@ def extract_final_hop(bgp_network):
 					if enableDebugMessage == True:
 						debug_line = f"COUNT:{count} {' ':<2} LENHOP:{len(hops)} {' ':<2} DEC:{dec_count} {line}\n"
 						print(debug_line)
-						os.popen(f"echo {datenow} {debug_line} >> lasthop_logs.txt")
 
 		print(f"{success_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
 	time.sleep(timeout_count)
