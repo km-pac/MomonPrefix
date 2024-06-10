@@ -119,7 +119,7 @@ def extract_final_hop(bgp_network):
 				while isValidHop != True:
 					hops = list()
 					print(f"{' ':<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {sub_style}Checking for Last Hop", end="\r", flush=True)
-					command = f"mtr -r -n -u {alive_ip}"
+					command = f"mtr -r -n {alive_ip}"
 					process = os.popen(command)
 					for line in process: hops.append(line)
 					for count, line in enumerate(hops):
