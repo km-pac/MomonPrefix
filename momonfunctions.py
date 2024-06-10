@@ -19,8 +19,6 @@ sub_style = Fore.MAGENTA + Style.BRIGHT
 error_style = Fore.RED + Style.BRIGHT
 enableDebugMessage = False
 
-
-
 class ExtractedIP:
 	def	__init__(self, client_ip, bgp_network, isp_netname):
 		self.client_ip = client_ip
@@ -33,9 +31,6 @@ def extract_parse_clients(file_path):
 		extracted_ips = [line.strip() for line in lines]
 		unique_ips = sorted(list(set(extracted_ips)))
 		print(f"{sub_style}EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
-
-	os.popen(f"echo {unique_ips} >> db/bgp_prefix.txt")
-
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(target_url, headers, unique_ips):
