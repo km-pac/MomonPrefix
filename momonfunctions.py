@@ -26,8 +26,7 @@ class ExtractedIP:
 def extract_parse_clients(file_path):
 	with open(file_path, 'r') as file: 
 		lines = file.readlines() 
-		# extracted_ips = [line.strip() for line in lines]
-		extracted_ips = next((line.strip() for line in lines), [])
+		extracted_ips = [line.strip() for line in lines]
 		unique_ips = sorted(list(set(extracted_ips)))
 		print(f"{sub_style}EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
@@ -50,8 +49,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 		data = response.text
 		
 		try: 
-			# client_ip = [line for line in data.split('\n') if "/net/" in line][0]
-			client_ip = next((line for line in data.split('\n') if "/net/" in line), "N/A")
+			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
 			parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{success_style}{count+1:<{index_spacing}} {ip:<{ip_spacing}} {parsed_network_ip:<{end_spacing}}")
@@ -82,8 +80,11 @@ def extract_netname(category ,target_url, headers, networks):
 			response = session.get(target_url + parsed_network, headers=headers)
 			data = response.text
 
-			# network_ip = [line for line in data.split('\n') if ("netname:" in line or "Netname:" in line) or ("descr:" in line or "Descr:" in line else "N/A")][0]
-			network_ip = next((line for line in data.split('\n') if "netname:" in line or "Netname:" in line or "descr:" in line or "Descr:" in line), "N/A")
+			# network_ip = [line for line in data.split('\n') if ("netname:" in line or "Netname:" in line) or ("descr:" in line or "Descr:" in line)][0]
+
+			network_ips = [line for line in data.split('\n') if ("netname:" in line or "Netname:" in line) or ("descr:" in line or "Descr:" in line)]
+			network_ip = network_ips[0] if network_ips else "N/A"
+
 			parsed_netname = network_ip.split(":")[1].strip()
 			network_netname.append(parsed_netname)
 			print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{end_spacing}}")
