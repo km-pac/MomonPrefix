@@ -89,6 +89,7 @@ def extract_netname(category ,target_url, headers, networks):
 
 			try:
 				network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
+				print("===========",network_ip)
 				parsed_netname = network_ip.split(":")[1].strip()
 				network_netname.append(parsed_netname)
 				print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{end_spacing}}")
