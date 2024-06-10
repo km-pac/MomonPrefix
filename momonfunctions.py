@@ -34,7 +34,6 @@ def extract_parse_clients(file_path):
 		unique_ips = sorted(list(set(extracted_ips)))
 		print(f"{sub_style}EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
 
-	os.popen(f"rm -rf db/bgp_prefix.txt")
 	os.popen(f"echo {unique_ips} >> db/bgp_prefix.txt")
 
 	return extracted_ips, unique_ips
