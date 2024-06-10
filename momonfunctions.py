@@ -8,7 +8,8 @@ init(autoreset = True)
 
 datenow = datetime.datetime.now()
 
-title_spacing, index_spacing = 5
+title_spacing = 5
+index_spacing = 5
 ip_spacing = 22
 end_spacing = 50
 timeout_count = 5
