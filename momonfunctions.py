@@ -92,7 +92,7 @@ def extract_netname(category ,target_url, headers, networks):
 			if enableDebugMessage == True:
 				debug_line = f"DEBUG: DETECTED NAME:{parsed_netname} {' ':<{index_spacing}} COUNT: {len(network_netname)}"
 				print(debug_line)
-				os.popen(f"echo {debug_line} >> netname_logs.txt")
+				os.popen(f"echo date {debug_line} >> netname_logs.txt")
 				
 	time.sleep(timeout_count)
 	return network_netname
@@ -151,7 +151,7 @@ def extract_final_hop(bgp_network):
 					if enableDebugMessage == True:
 						debug_line = f"\nCOUNT:{count} {' ':<{index_spacing}} LENHOP:{len(hops)} {' ':<{index_spacing}} DEC:{dec_count} {line}"
 						print(debug_line)
-						os.popen(f"echo {debug_line} >> lasthop_logs.txt")
+						os.popen(f"echo date {debug_line} >> lasthop_logs.txt")
 
 		print(f"{success_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
 	time.sleep(timeout_count)
