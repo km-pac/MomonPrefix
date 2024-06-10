@@ -47,7 +47,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 		session.mount('http://', adapter)
 		session.mount('https://', adapter)
 
-		response = session.get(target_url + ip, headers=headers)
+		response = requests.get(target_url + ip, headers=headers)
 		data = response.text
 
 		try: 
