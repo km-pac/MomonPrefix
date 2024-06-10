@@ -86,7 +86,7 @@ def extract_netname(category ,target_url, headers, networks):
 				print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{end_spacing}}")
 				if enableDebugMessage == True:
 					print("DEBUG:\t", [line for line in data.split('\n') if ("descr:" in line or "Descr:" in line) or ("netname:" in line or "Netname:" in line)])
-					print(parsed_netname, len(parsed_netname))
+					print(parsed_netname, len(network_netname))
 			except: continue
 	time.sleep(timeout_count)
 	return network_netname
