@@ -80,6 +80,8 @@ def extract_netname(category ,target_url, headers, networks):
 			response = session.get(target_url + parsed_network, headers=headers)
 			data = response.text
 			try:
+				if enableDebugMessage == True:
+					print("DEBUG:\t", [line for line in data.split('\n') if "descr:" in line or "Descr:" in line])
 				network_ip = [line for line in data.split('\n') if "descr:" in line or "Descr:" in line][0]
 				parsed_netname = network_ip.split(":")[1].strip()
 				network_netname.append(parsed_netname)
