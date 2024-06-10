@@ -26,7 +26,8 @@ class ExtractedIP:
 def extract_parse_clients(file_path):
 	with open(file_path, 'r') as file: 
 		lines = file.readlines() 
-		extracted_ips = [line.strip() for line in lines]
+		# extracted_ips = [line.strip() for line in lines]
+		extracted_ips = next((line.strip() for line in lines), [])
 		unique_ips = sorted(list(set(extracted_ips)))
 		print(f"{sub_style}EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
