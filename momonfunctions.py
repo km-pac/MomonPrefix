@@ -12,12 +12,12 @@ title_spacing = 5
 index_spacing = 5
 ip_spacing = 22
 end_spacing = 50
-timeout_count = 5
+timeout_count = 2
 title_style = Fore.CYAN + Style.BRIGHT
 success_style = Fore.GREEN + Style.BRIGHT
 sub_style = Fore.MAGENTA + Style.BRIGHT
 error_style = Fore.RED + Style.BRIGHT
-enableDebugMessage = True
+enableDebugMessage = False
 
 
 
