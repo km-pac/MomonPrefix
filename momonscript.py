@@ -1,4 +1,4 @@
-import os
+import os, time
 from colorama import Fore, Style, init
 from momonfunctions import extract_parse_clients
 from momonfunctions import extract_bgp_network
@@ -11,7 +11,7 @@ init(autoreset = True)
 
 target_url = "https://bgp.he.net/ip/"
 headers = {
-    'User-Agent': 'Mozilla/5.0 (Linux; Android 10; SM-G996U Build\\/QP1A.190711.020; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Mobile Safari/537.36',
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
 }
 file_path = "clientips.txt"
 
