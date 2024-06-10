@@ -1,4 +1,4 @@
-import os, time
+import os
 from colorama import Fore, Style, init
 from momonfunctions import extract_parse_clients
 from momonfunctions import extract_bgp_network
