@@ -96,7 +96,7 @@ def extract_netname(category ,target_url, headers, networks):
 			# network_ip = network_ips[0] if network_ips else "N/A"
 
 		if enableDebugMessage == True:
-			debug_line = f"DEBUG: DETECTED NAME:{parsed_netname} {' ':<{index_spacing}} COUNT: {len(network_netname)}"
+			debug_line = f"DEBUG: DETECTED NAME:{parsed_netname} {' ':<{index_spacing}} COUNT: {len(network_netname)}\n"
 			print(debug_line)
 			os.popen(f"echo {datenow} {debug_line} >> logs/netname_logs.txt")
 				
@@ -155,7 +155,7 @@ def extract_final_hop(bgp_network):
 							isValidHop = True
 					
 					if enableDebugMessage == True:
-						debug_line = f"\nCOUNT:{count} {' ':<{index_spacing}} LENHOP:{len(hops)} {' ':<{index_spacing}} DEC:{dec_count} {line}"
+						debug_line = f"COUNT:{count} {' ':<{index_spacing}} LENHOP:{len(hops)} {' ':<{index_spacing}} DEC:{dec_count} {line}\n"
 						print(debug_line)
 						os.popen(f"echo {datenow} {debug_line} >> lasthop_logs.txt")
 
