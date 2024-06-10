@@ -88,7 +88,8 @@ def extract_netname(category ,target_url, headers, networks):
 			data = response.text
 
 			try:
-				network_ip = [line for line in data.split('\n') if "descr:" in line or "Descr:" in line or "netname:" in line or "Netname:" in line][0]
+				network_ip = [line for line in data.split('\n') if "netname:" in line or "Netname:" in line][0]
+				network_ip = [line for line in data.split('\n') if "descr:" in line or "Descr:" in line][0]
 				parsed_netname = network_ip.split(":")[1].strip()
 				network_netname.append(parsed_netname)
 				print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{end_spacing}}")
@@ -153,7 +154,7 @@ def extract_final_hop(bgp_network):
 							isValidHop = True
 					
 					if enableDebugMessage == True:
-						debug_line = f"COUNT:{count} {' ':<2} LENHOP:{len(hops)} {' ':<2} DEC:{dec_count} {line}\n"
+						debug_line = f"COUNT:{count} {' ':<2} LENHOP:{len(hops)} {' ':<2} DEC:{dec_count} {line}"
 						print(debug_line)
 
 		print(f"{success_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
