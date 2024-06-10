@@ -15,6 +15,7 @@ title_style = Fore.CYAN + Style.BRIGHT
 success_style = Fore.GREEN + Style.BRIGHT
 sub_style = Fore.MAGENTA + Style.BRIGHT
 error_style = Fore.RED + Style.BRIGHT
+enableDebugMessage = True
 
 class ExtractedIP:
 	def	__init__(self, client_ip, bgp_network, isp_netname):
@@ -119,11 +120,11 @@ def extract_final_hop(bgp_network):
 				while isValidHop != True:
 					hops = list()
 					print(f"{' ':<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {sub_style}Checking for Last Hop", end="\r", flush=True)
-					command = f"mtr -r -n {alive_ip}"
+					command = f"mtr -r -n -c 1 {alive_ip}"
 					process = os.popen(command)
 					for line in process: hops.append(line)
 					for count, line in enumerate(hops):
-						print(f"COUNT:{count} LENHOP:{len(hops)} DEC:{dec_count} HOP:{line}")
+						if enableDebugMessage == True: print(f"\nCOUNT:{count} LENHOP:{len(hops)} DEC:{dec_count} HOP:{line}")
 						if count == len(hops)-dec_count:
 							extracted_hop = line.split("-- ")[1].split(" ")[0].strip()
 							if "???" in line:
