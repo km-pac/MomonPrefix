@@ -100,7 +100,7 @@ def extract_netname(category ,target_url, headers, networks):
 		if enableDebugMessage == True:
 			debug_line = f"DEBUG: DETECTED NAME: {parsed_netname} {' ':<{index_spacing}} COUNT: {len(network_netname)}\n"
 			print(debug_line)
-			os.popen(f"echo {datenow} {debug_line} >> logs/netname_logs.txt")
+			os.popen(f"echo {datenow} {debug_line} >> netname_logs.txt")
 				
 	time.sleep(timeout_count)
 	return network_netname
