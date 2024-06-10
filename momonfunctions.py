@@ -33,6 +33,9 @@ def extract_parse_clients(file_path):
 		extracted_ips = [line.strip() for line in lines]
 		unique_ips = sorted(list(set(extracted_ips)))
 		print(f"{sub_style}EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
+
+	os.popen(f"echo {unique_ips} >> db/bgp_prefix.txt")
+
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(target_url, headers, unique_ips):
@@ -58,14 +61,13 @@ def extract_bgp_network(target_url, headers, unique_ips):
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{success_style}{count+1:<{index_spacing}} {ip:<{ip_spacing}} {parsed_network_ip:<{end_spacing}}")
 		except: continue
-		if enableDebugMessage == True: 
-			if count == 20: break
+		if count == 20: break
 	bgp_networks = sorted(set(parsed_bgp_networks))
 	print(f"{sub_style}\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}")
 	time.sleep(timeout_count)
 	return bgp_networks
 
-# def extract_netname(category ,target_url, headers, networks):
+def extract_netname(category ,target_url, headers, networks):
 	parsed_netname = list()
 	network_netname = list()
 	print(f"{title_style}\n{'>> ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
@@ -96,25 +98,6 @@ def extract_bgp_network(target_url, headers, unique_ips):
 			debug_line = f"DEBUG: DETECTED NAME: {parsed_netname} {' ':<{index_spacing}} COUNT: {len(network_netname)}\n"
 			print(debug_line)
 
-	time.sleep(timeout_count)
-	return network_netname
-
-def extract_netname(category ,target_url, headers, networks):
-	parsed_netname = list()
-	network_netname = list()
-	print(f"{title_style}\n{'>> ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
-	for count, network in enumerate(networks):
-		if "N/A" in network: network_netname.append("N/A")
-		else:
-			parsed_network = network.strip().split("/")[0]
-			response = requests.get(target_url + parsed_network, headers=headers)
-			data = response.text
-			try:
-				network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
-				parsed_netname = network_ip.split(":")[1].strip()
-				network_netname.append(parsed_netname)
-				print(f"{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{ip_spacing}}")
-			except: continue
 	time.sleep(timeout_count)
 	return network_netname
 
