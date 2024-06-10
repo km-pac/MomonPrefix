@@ -140,11 +140,11 @@ def extract_final_hop(bgp_network):
 				print(f"{' ':<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {sub_style}Checking for Last Hop", end="\r", flush=True)
 				command = f"mtr -r -n -c 1 {alive_ip}"
 				process = os.popen(command)
-				for line in process: hops.append(line)
+				for line in process: hops.append(line.replace("-- ","| "))
 				for count, line in enumerate(hops):
 					
 					if count == len(hops)-dec_count:
-						extracted_hop = line.split("-- ")[1].split(" ")[0].strip()
+						extracted_hop = line.split("| ")[1].split(" ")[0].strip()
 						if "???" in line:
 							print(f"{error_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} ERROR: {extracted_hop} NULL VALUE{' ':<{ip_spacing}}")
 							dec_count += 1
@@ -158,7 +158,7 @@ def extract_final_hop(bgp_network):
 							isValidHop = True
 					
 					if enableDebugMessage == True:
-						debug_line = f"COUNT:{count} {' ':<{index_spacing}} LENHOP:{len(hops)} {' ':<{index_spacing}} DEC:{dec_count} {line.replace("-- ", "")}\n"
+						debug_line = f"COUNT:{count} {' ':<{index_spacing}} LENHOP:{len(hops)} {' ':<{index_spacing}} DEC:{dec_count} {line}\n"
 						print(debug_line)
 						os.popen(f"echo {datenow} {debug_line} >> logs/lasthop_logs.txt")
 
