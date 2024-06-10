@@ -49,7 +49,8 @@ def extract_bgp_network(target_url, headers, unique_ips):
 		data = response.text
 		
 		try: 
-			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
+			# client_ip = [line for line in data.split('\n') if "/net/" in line][0]
+			client_ip = next((line for line in data.split('\n') if "/net/" in line), "N/A")
 			parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{success_style}{count+1:<{index_spacing}} {ip:<{ip_spacing}} {parsed_network_ip:<{end_spacing}}")
@@ -80,13 +81,14 @@ def extract_netname(category ,target_url, headers, networks):
 			response = session.get(target_url + parsed_network, headers=headers)
 			data = response.text
 
-			network_ip = [line for line in data.split('\n') if ("netname:" in line or "Netname:" in line) or ("descr:" in line or "Descr:" in line)][0]
+			# network_ip = [line for line in data.split('\n') if ("netname:" in line or "Netname:" in line) or ("descr:" in line or "Descr:" in line else "N/A")][0]
+			network_ip = next((line for line in data.split('\n') if "netname:" in line or "Netname:" in line or "descr:" in line or "Descr:" in line), "N/A")
 			parsed_netname = network_ip.split(":")[1].strip()
 			network_netname.append(parsed_netname)
 			print(f"{success_style}{count+1:<{index_spacing}} {network:<{ip_spacing}} {parsed_netname:<{end_spacing}}")
 
 			if enableDebugMessage == True:
-				debug_line = f"DEBUG: {network_ip}\t DETECTED NAME:{parsed_netname}\t COUNT: {len(network_netname)}"
+				debug_line = f"DEBUG: DETECTED NAME:{parsed_netname} {' ':<{index_spacing}} COUNT: {len(network_netname)}"
 				print(debug_line)
 				os.popen(f"echo {debug_line} >> netname_logs.txt")
 				
@@ -145,7 +147,7 @@ def extract_final_hop(bgp_network):
 							isValidHop = True
 					
 					if enableDebugMessage == True:
-						debug_line = f"\nCOUNT:{count}\t LENHOP:{len(hops)}\t DEC:{dec_count} {line}"
+						debug_line = f"\nCOUNT:{count} {' ':<{index_spacing}} LENHOP:{len(hops)} {' ':<{index_spacing}} DEC:{dec_count} {line}"
 						print(debug_line)
 						os.popen(f"echo {debug_line} >> lasthop_logs.txt")
 
