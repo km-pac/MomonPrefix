@@ -50,15 +50,13 @@ def extract_bgp_network(target_url, headers, unique_ips):
 		response = session.get(target_url + ip, headers=headers)
 		data = response.text
 
-		print(data)
-
-		# try: 
-		client_ip = [line for line in data.split('\n') if "/net/" in line][0]
-		parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
-		parsed_bgp_networks.append(parsed_network_ip)
-		print(f"{success_style}{count+1:<{index_spacing}} {ip:<{ip_spacing}} {parsed_network_ip:<{end_spacing}}")
-		# except: continue
-		if count == 20: break
+		try: 
+			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
+			parsed_network_ip = client_ip.strip().split("/net/")[1].split("\">")[0]
+			parsed_bgp_networks.append(parsed_network_ip)
+			print(f"{success_style}{count+1:<{index_spacing}} {ip:<{ip_spacing}} {parsed_network_ip:<{end_spacing}}")
+		except: continue
+		# if count == 20: break
 	bgp_networks = sorted(set(parsed_bgp_networks))
 	print(f"{sub_style}\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}")
 	time.sleep(timeout_count)
