@@ -156,4 +156,3 @@ def extract_final_hop(bgp_network):
 		print(f"{success_style}{maincount+1:<{index_spacing}} {bgp_network[maincount]:<{ip_spacing}} {alive_ip:<{ip_spacing}} {last_hops[maincount]:<{ip_spacing}}")	
 	time.sleep(timeout_count)
 	return alive_addresses, last_hops
->>>>>>> 5d2dc3640cc93f71604b15b830fe43e8d9be1eb2
