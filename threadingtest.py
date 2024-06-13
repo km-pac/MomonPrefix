@@ -30,6 +30,26 @@ def extract_parse_clients(file_path):
 		print(f"EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
 
+# def extract_bgp_network(unique_ip):
+#     bgp_prefixes = list()
+    
+#     print(f"Checking for BGP Prefix of {unique_ip}", end="\r", flush=True)
+
+#     session = requests.Session()
+#     retry = Retry(connect=3, backoff_factor=0.5)
+#     adapter = HTTPAdapter(max_retries=retry)
+#     session.mount('http://', adapter)
+#     session.mount('https://', adapter)
+
+#     response = session.get(target_url + unique_ip, headers=headers)
+#     data = response.text
+    
+#     parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0]
+#     bgp_prefixes.append(parsed_bgp_prefix)
+#     print(f"{success_style}{unique_ip:<{ip_spacing}} {parsed_bgp_prefix:<{end_spacing}}")
+    
+#     return bgp_prefixes
+
 def extract_bgp_network(unique_ip):
     bgp_prefixes = list()
     
@@ -44,8 +64,8 @@ def extract_bgp_network(unique_ip):
     response = session.get(target_url + unique_ip, headers=headers)
     data = response.text
     
-    parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0]
-    bgp_prefixes.append(parsed_bgp_prefix)
+    parsed_network_ip = data.strip().split("/net/")[1].split("\">")[0]
+    bgp_prefixes.append(parsed_network_ip)
     print(f"{success_style}{unique_ip:<{ip_spacing}} {parsed_bgp_prefix:<{end_spacing}}")
     
     return bgp_prefixes
@@ -76,4 +96,4 @@ os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
-	bgp_prefix = executor.map(extract_bgp_network, unique_ips)
+	executor.map(extract_bgp_network, unique_ips)
