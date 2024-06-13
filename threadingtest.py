@@ -30,7 +30,8 @@ def extract_bgp_network(unique_ip):
     response = session.get(target_url + unique_ip, headers=headers)
     data = response.text
     print(data)
-    parsed_bgp_prefixes.append(data.strip().split("https://bgpview.io/prefix/")[1].split("\">"))
+    parsed_bgp_prefixes.append(data.strip().split("<span><a href=\"https://bgpview.io/prefix/\"")[1].split("\">"))[0]
+	
     print(f"Checking for BGP Prefix of {unique_ip}: {parsed_bgp_prefixes[len(parsed_bgp_prefixes)]}")
     
 
