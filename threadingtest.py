@@ -23,13 +23,9 @@ def extract_bgp_network(target_url, headers, unique_ip):
 
     response = session.get(target_url + unique_ip, headers=headers)
     data = response.text
-
+    print(data)
     bgp_prefix = data.strip().split("/net/")[1].split("\">")[0]
     print(f"{unique_ip}:    {bgp_prefix}")
-
-
-
-
 
 
 target_url = "https://bgp.he.net/ip/"
