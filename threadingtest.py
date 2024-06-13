@@ -69,16 +69,18 @@ def extract_netname(ip_address):
     return bgp_netnames
 
 def extract_activeip(bgp_prefix):
+    active_ips = list()
     command = f"timeout 20s fping -a -g -q {bgp_prefix}"
     process = os.popen(command)
     for line in process:
         if line is not None:
             isAlive = True
-            active_addresses = line.split(" ")[0].strip()
+            parsed_active_ip = line.split(" ")[0].strip()
             break
         if not isAlive: 
-            active_addresses = "N/A"
-    return active_addresses
+            parsed_active_ip = "N/A"
+        active_ips.append(parsed_active_ip)
+    return active_ips
 
 
 
