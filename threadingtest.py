@@ -45,7 +45,8 @@ def extract_bgp_network(unique_ip):
     
     parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0]
     
-    parsed_bgp_netnames.append([data.split("break-word;\">")[1].split("</td>")[0]])
+    isp_count = data.count("break-word;\">")
+    parsed_bgp_netnames.append(data.split("break-word;\">")[isp_count].split("</td>")[0])
     print(parsed_bgp_netnames)
     
     print(f"{success_style}{unique_ip:<{ip_spacing}} {parsed_bgp_prefix:<{end_spacing}}")
