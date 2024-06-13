@@ -108,7 +108,6 @@ def extract_final_hop(bgp_network):
 			command = f"timeout 20s fping -a -g -q {bgp_prefix}"
 			process = os.popen(command)
 			for line in process:
-				if "exceeded" in line: continue
 				if line is not None:
 					isAlive = True
 					alive_addresses.append(line.split(" ")[0].strip())
