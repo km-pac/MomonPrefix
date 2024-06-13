@@ -25,12 +25,12 @@ def extract_parse_clients(file_path):
 		print(f"EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
 
-def extract_bgp_network(unique_ip):
+def extract_bgp_network(unique_ip, target_url, headers):
     parsed_bgp_netnames = list()
-    target_url = "https://bgpview.io/ip/"
-    headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
-    }
+    # target_url = "https://bgpview.io/ip/"
+    # headers = {
+    #         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+    # }
     
     print(f"Checking for BGP Prefix of {unique_ip}", end="\r", flush=True)
 
@@ -51,10 +51,17 @@ def extract_bgp_network(unique_ip):
     
     print(f"{success_style}{unique_ip:<{ip_spacing}} {parsed_bgp_prefix:<{end_spacing}}")
 
+
+
+target_url = "https://bgpview.io/ip/"
+headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+}
+
 file_path = "clientips.txt"
 
 os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
-	executor.map(extract_bgp_network, unique_ips)
+	executor.map(extract_bgp_network, unique_ips, target_url, headers)
