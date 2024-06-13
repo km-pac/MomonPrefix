@@ -95,7 +95,10 @@ extracted_ips, unique_ips = extract_parse_clients(file_path)
 with concurrent.futures.ThreadPoolExecutor() as executor:
     bgp_prefixes = list(executor.map(extract_bgp_network, unique_ips))
     print(bgp_prefixes)
-    active_addresses = list(executor.map(extract_bgp_network, ip) for ip in bgp_prefixes)
+
+    active_addresses = []
+    for prefix in bgp_prefixes:
+        active_addresses.extend(executor.map(extract_bgp_network, prefix))
     print(active_addresses)
 
     # bgp_netnames = list(executor.map(extract_netname, ip) for ip in bgp_prefixes)
