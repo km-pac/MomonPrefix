@@ -1,8 +1,19 @@
-import concurrent.futures
-import os
-import requests
+import requests, os, time, datetime, concurrent.futures
+from colorama import Fore, Style, init
 from requests.adapters import HTTPAdapter
 from urllib3.util.retry import Retry
+from IPy import IP
+
+title_spacing = 5
+index_spacing = 5
+ip_spacing = 22
+end_spacing = 50
+timeout_count = 2
+title_style = Fore.CYAN + Style.BRIGHT
+success_style = Fore.GREEN + Style.BRIGHT
+sub_style = Fore.MAGENTA + Style.BRIGHT
+error_style = Fore.RED + Style.BRIGHT
+enableDebugMessage = False
 
 def extract_parse_clients(file_path):
 	with open(file_path, 'r') as file: 
@@ -18,6 +29,9 @@ def extract_bgp_network(unique_ip):
     headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
     }
+    
+    print(f"{title_style}{'>> ':<{title_spacing}}EXTRACTING BGP NETWORK{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGTH':<{ip_spacing}}")
+    
     print(f"Checking for BGP Prefix of {unique_ip}", end="\r", flush=True)
 
     session = requests.Session()
@@ -29,8 +43,9 @@ def extract_bgp_network(unique_ip):
     response = session.get(target_url + unique_ip, headers=headers)
     data = response.text
     
-    bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0]
-    print(bgp_prefix)
+    parsed_bgp_prefixes.append(data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0])
+	
+    print(f"{success_style}{len(parsed_bgp_prefixes):<{index_spacing}} {parsed_bgp_prefixes[len(parsed_bgp_prefixes)]:<{ip_spacing}}")
 
 file_path = "clientips.txt"
 
