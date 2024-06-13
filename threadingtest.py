@@ -91,12 +91,11 @@ def extract_activeip(bgp_prefix):
     parsed_active_ip = "N/A"
     
     for line in process:
-        if line is not None:
-            isAlive = True
+        if line is not None or "ICMP" not in line:
             parsed_active_ip = line.split(" ")[0].strip()
             break
-    if not isAlive: 
-        parsed_active_ip = "N/A"
+        else:
+            parsed_active_ip = "N/A"
     active_ips.append(parsed_active_ip)
     
     print(f"{success_style}{'BGP PREFIX:':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {'ACTIVE IP:':<{index_spacing}} {parsed_active_ip:<{end_spacing}}")
