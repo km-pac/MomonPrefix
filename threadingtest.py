@@ -29,7 +29,7 @@ def extract_bgp_network(unique_ip):
     response = session.get(target_url + unique_ip, headers=headers)
     data = response.text
     bgp_prefix = data.strip().split("/net/")[1].split("\">")[0]
-    print(f"{bgp_prefix}")
+    print(f"Checking for BGP Prefix of {unique_ip}: {bgp_prefix}")
 
 
 file_path = "clientips.txt"
