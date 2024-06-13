@@ -19,8 +19,6 @@ sub_style = Fore.MAGENTA + Style.BRIGHT
 error_style = Fore.RED + Style.BRIGHT
 enableDebugMessage = False
 
-req_count_bgp = 0
-
 class ExtractedIP:
 	def	__init__(self, client_ip, bgp_network, isp_netname):
 		self.client_ip = client_ip
@@ -36,7 +34,6 @@ def extract_parse_clients(file_path):
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(target_url, headers, unique_ips):
-	global req_count_bgp
 	parsed_bgp_networks = list()
 	bgp_networks = list()
 	print(f"{title_style}{'>> ':<{title_spacing}}EXTRACTING BGP NETWORK{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGTH':<{ip_spacing}}")
@@ -52,7 +49,6 @@ def extract_bgp_network(target_url, headers, unique_ips):
 
 		response = session.get(target_url + ip, headers=headers)
 		data = response.text
-		if "exceed" not in data: req_count_bgp += 1
 
 		try: 
 			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
@@ -67,7 +63,6 @@ def extract_bgp_network(target_url, headers, unique_ips):
 	return bgp_networks
 
 def extract_netname(category ,target_url, headers, networks):
-	global req_count_bgp
 	parsed_netname = list()
 	network_netname = list()
 	print(f"{title_style}\n{'>> ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
@@ -86,7 +81,6 @@ def extract_netname(category ,target_url, headers, networks):
 			
 			response = session.get(target_url + parsed_network, headers=headers)
 			data = response.text
-			if "exceed" not in data: req_count_bgp += 1
 
 			try:
 				network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
