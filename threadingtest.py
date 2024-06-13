@@ -86,7 +86,7 @@ def extract_netname(ip_address):
     isp_count = data.count("break-word;\">")
     parsed_bgp_netnames = (data.split("break-word;\">")[isp_count].split("</td>")[0])
     bgp_netnames.append(parsed_bgp_netnames)
-    print(f"{success_style}{'CLIENT IP':<{ip_spacing}} {ip_address:<{ip_spacing}} {'BGP PREFIX':<{ip_spacing}} {parsed_bgp_netnames:<{end_spacing}}")
+    print(f"{success_style}{'CLIENT IP':<{index_spacing}} {ip_address:<{ip_spacing}} {'BGP PREFIX':<{index_spacing}} {parsed_bgp_netnames:<{end_spacing}}")
 
     return bgp_netnames
 
