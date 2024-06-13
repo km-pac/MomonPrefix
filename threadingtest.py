@@ -32,7 +32,7 @@ def extract_bgp_network(unique_ip):
 
     parsed_bgp_prefixes.append(data.strip().split("<span><a href=\"https://bgpview.io/prefix/\"")[1].split("\">"))[0]
 	
-    print(f"Checking for BGP Prefix of {unique_ip}: {parsed_bgp_prefixes[len(parsed_bgp_prefixes)]}")
+    print(parsed_bgp_prefixes)
     
 
 file_path = "clientips.txt"
