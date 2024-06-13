@@ -68,22 +68,40 @@ def extract_netname(ip_address):
     print(f"{success_style}{'CLIENT IP:':<{index_spacing}} {ip_address:<{ip_spacing}} {'BGP PREFIX:':<{index_spacing}} {parsed_bgp_netnames:<{end_spacing}}")
     return bgp_netnames
 
+# def extract_activeip(bgp_prefix):
+#     active_ips = list()
+#     command = f"timeout 20s fping -a -g -q {bgp_prefix}"
+#     process = os.popen(command)
+#     for line in process:
+#         if line is not None:
+#             isAlive = True
+#             parsed_active_ip = line.split(" ")[0].strip()
+#             break
+#         if not isAlive: 
+#             parsed_active_ip = "N/A"
+#         active_ips.append(parsed_active_ip)
+#     print(f"{success_style}{'BGP PREFIX:':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {'ACTIVE IP:':<{index_spacing}} {parsed_active_ip:<{end_spacing}}")
+#     return active_ips
+
 def extract_activeip(bgp_prefix):
     active_ips = list()
     command = f"timeout 20s fping -a -g -q {bgp_prefix}"
     process = os.popen(command)
+    
+    parsed_active_ip = "N/A"
+    
     for line in process:
         if line is not None:
             isAlive = True
             parsed_active_ip = line.split(" ")[0].strip()
             break
-        if not isAlive: 
-            parsed_active_ip = "N/A"
-        active_ips.append(parsed_active_ip)
+    if not isAlive: 
+        parsed_active_ip = "N/A"
+    active_ips.append(parsed_active_ip)
+    
     print(f"{success_style}{'BGP PREFIX:':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {'ACTIVE IP:':<{index_spacing}} {parsed_active_ip:<{end_spacing}}")
+    
     return active_ips
-
-
 
 
 
