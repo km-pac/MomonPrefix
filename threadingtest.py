@@ -32,9 +32,6 @@ def extract_bgp_network(unique_ip):
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
     }
     
-    if len(parsed_bgp_prefixes) == 0:
-        print(f"{title_style}{'>> ':<{title_spacing}}EXTRACTING BGP NETWORK{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGTH':<{ip_spacing}}")
-    
     print(f"Checking for BGP Prefix of {unique_ip}", end="\r", flush=True)
 
     session = requests.Session()
