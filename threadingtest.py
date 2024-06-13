@@ -85,7 +85,7 @@ def extract_netname(ip_address):
 
 def extract_activeip(bgp_prefix):
     active_ips = list()
-    command = f"timeout 20s fping -a -g -q {bgp_prefix}"
+    command = f"timeout 30s fping -a -g -q {bgp_prefix}"
     process = os.popen(command)
     
     parsed_active_ip = "N/A"
