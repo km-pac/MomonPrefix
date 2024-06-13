@@ -80,6 +80,7 @@ def extract_activeip(bgp_prefix):
         if not isAlive: 
             parsed_active_ip = "N/A"
         active_ips.append(parsed_active_ip)
+    print(f"{success_style}{'BGP PREFIX:':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {'ACTIVE IP:':<{index_spacing}} {parsed_active_ip:<{end_spacing}}")
     return active_ips
 
 
