@@ -26,7 +26,7 @@ def extract_parse_clients(file_path):
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(unique_ip):
-    parsed_bgp_prefixes = list()
+    parsed_bgp_netnames = list()
     target_url = "https://bgpview.io/ip/"
     headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
@@ -44,6 +44,10 @@ def extract_bgp_network(unique_ip):
     data = response.text
     
     parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0]
+    
+    parsed_bgp_netnames.append(data.split("break-word;\">")[1].split("</td>"))
+    print(parsed_bgp_netnames)
+    
     print(f"{success_style}{unique_ip:<{ip_spacing}} {parsed_bgp_prefix:<{end_spacing}}")
 
 file_path = "clientips.txt"
