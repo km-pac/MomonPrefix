@@ -19,7 +19,7 @@ sub_style = Fore.MAGENTA + Style.BRIGHT
 error_style = Fore.RED + Style.BRIGHT
 enableDebugMessage = False
 
-global req_count_bgp
+req_count_bgp = 0
 
 class ExtractedIP:
 	def	__init__(self, client_ip, bgp_network, isp_netname):
@@ -36,6 +36,7 @@ def extract_parse_clients(file_path):
 	return extracted_ips, unique_ips
 
 def extract_bgp_network(target_url, headers, unique_ips):
+	global req_count_bgp
 	parsed_bgp_networks = list()
 	bgp_networks = list()
 	print(f"{title_style}{'>> ':<{title_spacing}}EXTRACTING BGP NETWORK{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {'CLIENT IP':<{ip_spacing}} {'NETWORK/PREFIX LENGTH':<{ip_spacing}}")
@@ -66,6 +67,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 	return bgp_networks
 
 def extract_netname(category ,target_url, headers, networks):
+	global req_count_bgp
 	parsed_netname = list()
 	network_netname = list()
 	print(f"{title_style}\n{'>> ':<{title_spacing}}EXTRACTING {category} NETNAME{' ':<{title_spacing}}\n{'IDX':<{index_spacing}} {category:<{ip_spacing}} {'ISP/NETNAME':<{ip_spacing}}")
