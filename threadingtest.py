@@ -44,9 +44,11 @@ def extract_bgp_network(unique_ip):
     response = session.get(target_url + unique_ip,   
     headers=headers)
     data = response.text
-    print("============================", data)
-    parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0] 
-
+    
+    try:
+        parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0] 
+    except:
+        parsed_bgp_prefix = "N/A"
 
     bgp_prefixes.append(parsed_bgp_prefix)
     print(f"{success_style}{unique_ip:<{ip_spacing}}    {parsed_bgp_prefix:<{end_spacing}}")
