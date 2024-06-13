@@ -64,8 +64,8 @@ def extract_bgp_network(unique_ip):
     response = session.get(target_url + unique_ip, headers=headers)
     data = response.text
     
-    parsed_network_ip = data.strip().split("/net/")[1].split("\">")[0]
-    bgp_prefixes.append(parsed_network_ip)
+    parsed_bgp_prefix = data.strip().split("/net/")[1].split("\">")[0]
+    bgp_prefixes.append(parsed_bgp_prefix)
     print(f"{success_style}{unique_ip:<{ip_spacing}} {parsed_bgp_prefix:<{end_spacing}}")
     
     return bgp_prefixes
