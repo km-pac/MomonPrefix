@@ -43,9 +43,8 @@ def extract_bgp_network(unique_ip):
     response = session.get(target_url + unique_ip, headers=headers)
     data = response.text
     
-    parsed_bgp_prefixes.append(data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0])
-	
-    print(f"{success_style}{len(parsed_bgp_prefixes):<{index_spacing}} {parsed_bgp_prefixes[len(parsed_bgp_prefixes)]:<{ip_spacing}}")
+    parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0]
+    print(f"{success_style}{unique_ip:<{ip_spacing}} {parsed_bgp_prefix:<{end_spacing}}")
 
 file_path = "clientips.txt"
 
