@@ -98,7 +98,7 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
 
     active_addresses = []
     for prefix in bgp_prefixes:
-        active_addresses.extend(executor.map(extract_bgp_network, prefix))
+        active_addresses.extend(executor.map(extract_activeip, prefix))
     print(active_addresses)
 
     # bgp_netnames = list(executor.map(extract_netname, ip) for ip in bgp_prefixes)
