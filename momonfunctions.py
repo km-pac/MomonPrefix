@@ -19,6 +19,8 @@ sub_style = Fore.MAGENTA + Style.BRIGHT
 error_style = Fore.RED + Style.BRIGHT
 enableDebugMessage = False
 
+req_count_bgp = 0
+
 class ExtractedIP:
 	def	__init__(self, client_ip, bgp_network, isp_netname):
 		self.client_ip = client_ip
@@ -49,6 +51,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 
 		response = session.get(target_url + ip, headers=headers)
 		data = response.text
+		if data == "": req_count_bgp += 1
 
 		try: 
 			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
@@ -56,7 +59,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 			parsed_bgp_networks.append(parsed_network_ip)
 			print(f"{success_style}{count+1:<{index_spacing}} {ip:<{ip_spacing}} {parsed_network_ip:<{end_spacing}}")
 		except: continue
-		if count == 40: break
+		# if count == 20: break
 	bgp_networks = sorted(set(parsed_bgp_networks))
 	print(f"{sub_style}\nEXTRACTED BGP NET: {len(parsed_bgp_networks)}\nUNIQUE BGP NET: {len(bgp_networks)}")
 	time.sleep(timeout_count)
@@ -81,6 +84,7 @@ def extract_netname(category ,target_url, headers, networks):
 			
 			response = session.get(target_url + parsed_network, headers=headers)
 			data = response.text
+			if data == "": req_count_bgp += 1
 
 			try:
 				network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
