@@ -64,4 +64,4 @@ os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
-	executor.map(extract_bgp_network, unique_ips, target_url, headers)
+	executor.map(extract_bgp_network, [unique_ips, target_url, headers,])
