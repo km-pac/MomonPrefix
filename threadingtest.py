@@ -41,13 +41,17 @@ def extract_bgp_network(unique_ip):
     session.mount('http://', adapter)
     session.mount('https://', adapter)
 
-    response = session.get(target_url + unique_ip, headers=headers)
-    data = response.text
-    
-    parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0]
+    try:
+        response = session.get(target_url + unique_ip,      headers=headers)
+        data = response.text
+        parsed_bgp_prefix = data.split("<span><a href=")[1].split("/    prefix/")[1].split("\">")[0] 
+    except:
+        response = session.get(target_url + unique_ip, headers=headers)
+        data = response.text
+        parsed_bgp_prefix = data.strip().split("/net/")[1].split("\">")[0]
+
     bgp_prefixes.append(parsed_bgp_prefix)
-    print(f"{success_style}{unique_ip:<{ip_spacing}} {parsed_bgp_prefix:<{end_spacing}}")
-    
+    print(f"{success_style}{unique_ip:<{ip_spacing}}    {parsed_bgp_prefix:<{end_spacing}}")
     return bgp_prefixes
 
 # def extract_bgp_network(unique_ip):
