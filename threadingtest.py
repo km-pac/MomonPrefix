@@ -21,4 +21,4 @@ file_path = "clientips.txt"
 
 os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
-print(unique_ips)
+print(len(unique_ips))
