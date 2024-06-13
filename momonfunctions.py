@@ -51,7 +51,7 @@ def extract_bgp_network(target_url, headers, unique_ips):
 
 		response = session.get(target_url + ip, headers=headers)
 		data = response.text
-		if data == "": req_count_bgp += 1
+		if data != "": req_count_bgp += 1
 
 		try: 
 			client_ip = [line for line in data.split('\n') if "/net/" in line][0]
@@ -84,7 +84,7 @@ def extract_netname(category ,target_url, headers, networks):
 			
 			response = session.get(target_url + parsed_network, headers=headers)
 			data = response.text
-			if data == "": req_count_bgp += 1
+			if data != "": req_count_bgp += 1
 
 			try:
 				network_ip = [line for line in data.split('\n') if "netname:" in line or "NetName:" in line][0]
