@@ -17,6 +17,11 @@ sub_style = Fore.MAGENTA + Style.BRIGHT
 error_style = Fore.RED + Style.BRIGHT
 enableDebugMessage = False
 
+target_url = "https://bgpview.io/ip/"
+headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+}
+
 def extract_parse_clients(file_path):
 	with open(file_path, 'r') as file: 
 		lines = file.readlines() 
@@ -25,12 +30,8 @@ def extract_parse_clients(file_path):
 		print(f"EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
 
-def extract_bgp_network(unique_ip, target_url, headers):
-    parsed_bgp_netnames = list()
-    # target_url = "https://bgpview.io/ip/"
-    # headers = {
-    #         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
-    # }
+def extract_bgp_network(unique_ip):
+    bgp_prefixes = list()
     
     print(f"Checking for BGP Prefix of {unique_ip}", end="\r", flush=True)
 
@@ -44,19 +45,30 @@ def extract_bgp_network(unique_ip, target_url, headers):
     data = response.text
     
     parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0]
-    
-    isp_count = data.count("break-word;\">")
-    parsed_bgp_netnames.append(data.split("break-word;\">")[isp_count].split("</td>")[0])
-    print(parsed_bgp_netnames)
-    
+    bgp_prefixes.append(parsed_bgp_prefix)
     print(f"{success_style}{unique_ip:<{ip_spacing}} {parsed_bgp_prefix:<{end_spacing}}")
+    
+    return bgp_prefixes
 
+def extract_netname(ip_address):
+    bgp_netnames = list()
 
+    print(f"Checking for ISP of {ip_address}", end="\r", flush=True)
+	
+    session = requests.Session()
+    retry = Retry(connect=3, backoff_factor=0.5)
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
 
-target_url = "https://bgpview.io/ip/"
-headers = {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
-}
+    response = session.get(target_url + ip_address, headers=headers)
+    data = response.text
+    isp_count = data.count("break-word;\">")
+    parsed_bgp_netnames = (data.split("break-word;\">")[isp_count].split("</td>")[0])
+    bgp_netnames.append(parsed_bgp_netnames)
+    print(f"{success_style}{ip_address:<{ip_spacing}} {parsed_bgp_netnames:<{end_spacing}}")
+
+    return bgp_netnames
 
 file_path = "clientips.txt"
 
@@ -64,4 +76,5 @@ os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
-	executor.map(extract_bgp_network, [unique_ips, target_url, headers,])
+	bgp_prefixes = executor.map(extract_bgp_network, unique_ips)
+	bgp_netnames = executor.map(extract_netname, bgp_prefixes)
