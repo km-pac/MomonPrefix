@@ -12,7 +12,12 @@ def extract_parse_clients(file_path):
 		print(f"EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
 
-def extract_bgp_network(target_url, headers, unique_ip):
+def extract_bgp_network(unique_ip):
+	
+    target_url = "https://bgp.he.net/ip/"
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
+    }
     print(f"Checking for BGP Prefix of {unique_ip}", end="\r", flush=True)
     
     session = requests.Session()
@@ -28,10 +33,7 @@ def extract_bgp_network(target_url, headers, unique_ip):
     print(f"{unique_ip}:    {bgp_prefix}")
 
 
-target_url = "https://bgp.he.net/ip/"
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
-}
+
 file_path = "clientips.txt"
 
 os.system("clear")
