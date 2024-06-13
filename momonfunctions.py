@@ -19,7 +19,7 @@ sub_style = Fore.MAGENTA + Style.BRIGHT
 error_style = Fore.RED + Style.BRIGHT
 enableDebugMessage = False
 
-req_count_bgp = 0
+global req_count_bgp
 
 class ExtractedIP:
 	def	__init__(self, client_ip, bgp_network, isp_netname):
