@@ -1,5 +1,8 @@
 import concurrent.futures
 import os
+import requests
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 def extract_parse_clients(file_path):
 	with open(file_path, 'r') as file: 
@@ -8,6 +11,22 @@ def extract_parse_clients(file_path):
 		unique_ips = sorted(list(set(extracted_ips)))
 		print(f"EXTRACTED CLIENT IPs: {len(extracted_ips)}\nUNIQUE CLIENT IPs: {len(unique_ips)}\n")
 	return extracted_ips, unique_ips
+
+def extract_bgp_network(target_url, headers, unique_ip):
+    print(f"Checking for BGP Prefix of {unique_ip}", end="\r", flush=True)
+    
+    session = requests.Session()
+    retry = Retry(connect=3, backoff_factor=0.5)
+    adapter = HTTPAdapter(max_retries=retry)
+    session.mount('http://', adapter)
+    session.mount('https://', adapter)
+
+    response = session.get(target_url + unique_ip, headers=headers)
+    data = response.text
+
+    bgp_prefix = data.strip().split("/net/")[1].split("\">")[0]
+    print(f"{unique_ip}:    {bgp_prefix}")
+
 
 
 
@@ -21,4 +40,6 @@ file_path = "clientips.txt"
 
 os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
-print(len(unique_ips))
+
+with concurrent.futures.ThreadPoolExecutor() as executor:
+	executor.map(extract_bgp_network, target_url, headers, unique_ips)
