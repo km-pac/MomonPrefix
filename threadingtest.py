@@ -117,10 +117,12 @@ with concurrent.futures.ThreadPoolExecutor() as executor:
     print(bgp_prefixes)
 
     # Use executor.map directly on bgp_prefixes to apply extract_activeip function in parallel
-    active_addresses = executor.map(extract_activeip, bgp_prefixes)
-
-    active_addresses = list(active_addresses)
+    active_addresses = list(executor.map(extract_activeip, bgp_prefixes))
     
-    print(active_addresses)
+    # Print or process each element in active_addresses
+    for addr in active_addresses:
+        print(addr)
+    
+
 
     # bgp_netnames = list(executor.map(extract_netname, ip) for ip in bgp_prefixes)
