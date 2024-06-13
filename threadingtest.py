@@ -30,7 +30,7 @@ def extract_bgp_network(unique_ip):
     data = response.text
     
 	
-    print(data)
+    print(type(data))
     
 
 file_path = "clientips.txt"
