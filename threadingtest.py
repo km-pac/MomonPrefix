@@ -17,7 +17,7 @@ sub_style = Fore.MAGENTA + Style.BRIGHT
 error_style = Fore.RED + Style.BRIGHT
 enableDebugMessage = False
 
-target_url = "https://bgpview.io/ip/"
+target_url = "https://bgp.he.net/ip/"
 headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'
 }
