@@ -42,7 +42,8 @@ def extract_bgp_network(unique_ip):
     headers=headers)
     data = response.text
     try:
-        parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0] 
+        parsed_bgp_prefix = data.strip().split("/net/")[1].split("\">")[0]
+        # parsed_bgp_prefix = data.split("<span><a href=")[1].split("/prefix/")[1].split("\">")[0] 
     except:
         parsed_bgp_prefix = "N/A"
     bgp_prefixes.append(parsed_bgp_prefix)
