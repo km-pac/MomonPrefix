@@ -83,24 +83,24 @@ def extract_netname(ip_address):
 #     print(f"{success_style}{'BGP PREFIX:':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {'ACTIVE IP:':<{index_spacing}} {parsed_active_ip:<{end_spacing}}")
 #     return active_ips
 
-def extract_activeip(bgp_prefix):
-    active_ips = list()
-    command = f"timeout 30s fping -a -g -q {bgp_prefix}"
-    process = os.popen(command)
+# def extract_activeip(bgp_prefix):
+#     active_ips = list()
+#     command = f"timeout 30s fping -a -g -q {bgp_prefix}"
+#     process = os.popen(command)
     
-    parsed_active_ip = "N/A"
+#     parsed_active_ip = "N/A"
     
-    for line in process:
-        if line is not None or "ICMP" not in line:
-            parsed_active_ip = line.split(" ")[0].strip()
-            break
-        else:
-            parsed_active_ip = "N/A"
-    active_ips.append(parsed_active_ip)
+#     for line in process:
+#         if line is not None or "ICMP" not in line:
+#             parsed_active_ip = line.split(" ")[0].strip()
+#             break
+#         else:
+#             parsed_active_ip = "N/A"
+#     active_ips.append(parsed_active_ip)
     
-    print(f"{success_style}{'BGP PREFIX:':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {'ACTIVE IP:':<{index_spacing}} {parsed_active_ip:<{end_spacing}}")
+#     print(f"{success_style}{'BGP PREFIX:':<{index_spacing}} {bgp_prefix:<{ip_spacing}} {'ACTIVE IP:':<{index_spacing}} {parsed_active_ip:<{end_spacing}}")
     
-    return active_ips
+#     return active_ips
 
 
 
@@ -113,7 +113,7 @@ def extract_activeip(bgp_prefix):
 
 
 # with concurrent.futures.ThreadPoolExecutor() as executor:
-#     bgp_prefixes = list(executor.map(extract_bgp_network, unique_ips))
+#     bgp_prefixes = list(executor.map(extract_bgp_networkT, unique_ips))
 
 
 #     for ip in bgp_prefixes:
