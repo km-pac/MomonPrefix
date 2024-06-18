@@ -1,4 +1,4 @@
-import os, time
+import os, concurrent.futures
 from colorama import Fore, Style, init
 from momonfunctions import extract_parse_clients
 from momonfunctions import extract_bgp_network
@@ -6,6 +6,7 @@ from momonfunctions import extract_netname
 from momonfunctions import extract_final_hop
 from momonfunctions import success_style
 from momonfunctions import title_spacing, index_spacing, ip_spacing
+from threadingtest.py import extract_bgp_networkT
 
 init(autoreset = True)
 
@@ -17,7 +18,9 @@ file_path = "clientips.txt"
 
 os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
-bgp_networks = extract_bgp_network(target_url, headers, unique_ips)
+# bgp_networks = extract_bgp_network(target_url, headers, unique_ips)
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    bgp_networks = list(executor.map(extract_bgp_network, unique_ips))
 
 os.system("clear")
 # bgp_netname = extract_netname("BGP", target_url, headers, bgp_networks)
