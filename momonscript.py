@@ -6,7 +6,7 @@ from momonfunctions import extract_netname
 from momonfunctions import extract_final_hop
 from momonfunctions import success_style
 from momonfunctions import title_spacing, index_spacing, ip_spacing
-from threadingtest.py import extract_bgp_networkT
+from threadingtest import extract_bgp_networkT
 
 init(autoreset = True)
 
