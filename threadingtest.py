@@ -114,8 +114,9 @@ extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
     bgp_prefixes = executor.map(extract_bgp_networkT, unique_ips)
-    bgp_prefixes = set(bgp_prefixes)
+    
     print(bgp_prefixes)
+    bgp_prefixes = list(set(bgp_prefixes))
     for ip in bgp_prefixes:
          os.system(f"echo {ip} >> bgp_prefixes.txt")
 
