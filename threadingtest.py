@@ -112,13 +112,16 @@ os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 proccesses = []
-with concurrent.futures.ThreadPoolExecutor() as executor:
+with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
     # bgp_prefixes = executor.map(extract_bgp_networkT, unique_ips)
-    
-    proccesses.append(executor.map(extract_bgp_networkT, unique_ips))
-    for _ in concurrent.futures.as_completed(proccesses):
-            print('Result: ', _.result())
-            os.system(f"echo {_.result()} >> bgp_prefixes.txt")
+    bgp_prefixes = list(executor.map(extract_bgp_networkT, unique_ips))
+    print('\n'.join(str(x[0]) + ', ' + str(x[1]) for x in bgp_prefixes))
+
+
+    # proccesses.append(executor.map(extract_bgp_networkT, unique_ips))
+    # for ip in concurrent.futures.as_completed(proccesses):
+    #         print('Result: ', ip.result())
+    #         os.system(f"echo {ip.result()} >> bgp_prefixes.txt")
     
          
 
