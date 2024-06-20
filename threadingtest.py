@@ -115,8 +115,9 @@ proccesses = []
 with concurrent.futures.ThreadPoolExecutor(max_workers=None) as executor:
     # bgp_prefixes = executor.map(extract_bgp_networkT, unique_ips)
     bgp_prefixes = list(executor.map(extract_bgp_networkT, unique_ips))
-    print('\n'.join(str(x[0]) + ', ' + str(x[1]) for x in bgp_prefixes))
-
+    try:
+        print('\n'.join(str(x[0]) + ', ' + str(x[1]) for x in bgp_prefixes))
+    except: print("test")
 
     # proccesses.append(executor.map(extract_bgp_networkT, unique_ips))
     # for ip in concurrent.futures.as_completed(proccesses):
