@@ -106,15 +106,14 @@ def extract_netname(ip_address):
 
 
 
-# file_path = "clientips.txt"
+file_path = "clientips.txt"
 
-# os.system("clear")
-# extracted_ips, unique_ips = extract_parse_clients(file_path)
+os.system("clear")
+extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 
 with concurrent.futures.ThreadPoolExecutor() as executor:
     bgp_prefixes = list(executor.map(extract_bgp_networkT, unique_ips))
-
 
     for ip in bgp_prefixes:
          os.system(f"echo {ip} >> bgp_prefixes.txt")
