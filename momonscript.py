@@ -21,6 +21,9 @@ parsed_bgp_networks = list()
 os.system("clear")
 extracted_ips, unique_ips = extract_parse_clients(file_path)
 bgp_networks = extract_bgp_network(target_url, headers, unique_ips)
+
+for ip in bgp_networks:
+    os.popen(f"echo {ip} >> bgp_prefixes.txt")
 # with concurrent.futures.ThreadPoolExecutor() as executor:
 #     bgp_networks = list(executor.map(extract_bgp_networkT, unique_ips))
 
