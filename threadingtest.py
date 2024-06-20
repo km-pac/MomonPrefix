@@ -112,12 +112,12 @@ def extract_netname(ip_address):
 # extracted_ips, unique_ips = extract_parse_clients(file_path)
 
 
-# with concurrent.futures.ThreadPoolExecutor() as executor:
-#     bgp_prefixes = list(executor.map(extract_bgp_networkT, unique_ips))
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    bgp_prefixes = list(executor.map(extract_bgp_networkT, unique_ips))
 
 
-#     for ip in bgp_prefixes:
-#          print(ip)
+    for ip in bgp_prefixes:
+         os.system(f"echo {ip} >> bgp_prefixes.txt")
 
     # # Use executor.map directly on bgp_prefixes to apply extract_activeip function in parallel
     # active_addresses = list(executor.map(extract_activeip, unique_ips))
