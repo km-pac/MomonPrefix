@@ -27,8 +27,8 @@ for ip in bgp_networks:
 # with concurrent.futures.ThreadPoolExecutor() as executor:
 #     bgp_networks = list(executor.map(extract_bgp_networkT, unique_ips))
 
-# for ip in bgp_networks:
-#     parsed_bgp_networks.append(ip.replace("[","").replac("]","").replace("\"\"",""))
+for ip in bgp_networks:
+    parsed_bgp_networks.append(ip.replace("[","").replace("]","").replace("\"\"",""))
 
 os.system("clear")
 # bgp_netname = extract_netname("BGP", target_url, headers, bgp_networks)
