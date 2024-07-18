@@ -34,7 +34,7 @@ os.system("clear")
 # bgp_netname = extract_netname("BGP", target_url, headers, bgp_networks)
 
 os.system("clear")
-alive_addresses, last_hops = extract_final_hop(parsed_bgp_networks)
+# alive_addresses, last_hops = extract_final_hop(parsed_bgp_networks)
 
 os.system("clear")
 last_hops_netname = extract_netname("LAST LOP", target_url, headers, last_hops)
